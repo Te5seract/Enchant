@@ -5,6 +5,8 @@ window.__queryHandling__ = (function () {
         /*////////////////////////////////////////
             swap method swaps main query for the one defined 
             in the swap method.
+
+            // hi
         */ 
         proto.swap = function (mixElem) {
             var replaceNode = [];

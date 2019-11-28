@@ -16,9 +16,21 @@
     <script src="../src/enchant.js"></script>
 </head>
 <body>
+
+    <div class="elem"></div>
+    <div class="elem"></div>
+    <div class="elem"></div>
+    <div class="elem"></div>
+    <div class="elem"></div>
+
+    <div class="elem2"></div>
+    <div class="elem2"></div>
+    <div class="elem2"></div>
+    <div class="elem2"></div>
+    <div class="elem2"></div>
     
     <script>
-        E(document.body).make("div", 3, "class", "el");
+        E(document.body).css("background-color: #333;");
     </script>
 </body>
 </html>

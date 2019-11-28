@@ -217,29 +217,31 @@ window.E = (function () {
     ////////////////////////////////////////
 
      /*////////////////////////////////////////
-            swap method swaps main query for the one defined 
-            in the swap method.
-        */ 
-       proto.swap = function (mixElem) {
-        var replaceNode = [];
+        swap method swaps main query for the one defined 
+        in the swap method.
+    */ 
+   proto.swap = function (mixElem) {
+        if (typeof mixElem === "string") {
+            var replaceNode = [];
 
-        // split up the selectors and turn it into an array 
-        mixElem = mixElem.replace(/,| /g, " ").replace(/{| {/g, "~{").split(" ").filter(Boolean);
+            // split up the selectors and turn it into an array 
+            mixElem = mixElem.replace(/,| /g, " ").replace(/{| {/g, "~{").split(" ").filter(Boolean);
 
-        en.forEach(mixElem, (i) => {
-            mixElem[i.index] = mixElem[i.index].replace("~", " ");
+            en.forEach(mixElem, (i) => {
+                mixElem[i.index] = mixElem[i.index].replace("~", " ");
 
-            // push individual elements into replaceNode array
-            en.forEach(en.selector(mixElem[i.index]), (x) => {
-                replaceNode.push(en.selector(mixElem[i.index])[x.index]);
+                // push individual elements into replaceNode array
+                en.forEach(en.selector(mixElem[i.index]), (x) => {
+                    replaceNode.push(en.selector(mixElem[i.index])[x.index]);
+                });
             });
-        });
 
-        //  completely clear the selector
-        this.length = en.clearSelector(this);
-        
-        // reset selector size
-        this.length = en.resetSelector(this, en.selector(replaceNode));
+            //  completely clear the selector
+            this.length = en.clearSelector(this);
+            
+            // reset selector size
+            this.length = en.resetSelector(this, en.selector(replaceNode));
+        }
 
         return this;
     }; // swap method end

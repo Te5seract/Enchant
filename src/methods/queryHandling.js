@@ -122,7 +122,6 @@ window.__queryHandling__ = (function () {
 
             return this;
         }; // attach method end
-
         
         /*////////////////////////////////////////
             detach items from main selector

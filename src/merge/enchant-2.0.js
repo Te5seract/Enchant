@@ -220,10 +220,10 @@ window.E = (function () {
         swap method swaps main query for the one defined 
         in the swap method.
     */ 
-   proto.swap = function (mixElem) {
-        if (typeof mixElem === "string") {
-            var replaceNode = [];
+    proto.swap = function (mixElem) {
+        var replaceNode = [];
 
+        if (typeof mixElem === "string") {
             // split up the selectors and turn it into an array 
             mixElem = mixElem.replace(/,| /g, " ").replace(/{| {/g, "~{").split(" ").filter(Boolean);
 
@@ -241,6 +241,31 @@ window.E = (function () {
             
             // reset selector size
             this.length = en.resetSelector(this, en.selector(replaceNode));
+        } else {
+            // if the type of element is an object and it has no length push it into replaceNode array
+            if (!mixElem.length) {
+                replaceNode.push(mixElem);
+            }
+            // if the type of element is an object and it has length check the array for arrays
+            else if (mixElem.length) {
+                en.forEach(mixElem, (i) => {
+                    // detect multi-dimensional arrays
+                    if (mixElem[i.index].length) {
+                        en.forEach(mixElem[i.index], (x) => {
+                            replaceNode.push(mixElem[i.index][x.index]);
+                        });
+                    } else {
+                        // push single node to replaceNode array
+                        replaceNode.push(mixElem[i.index]);
+                    }
+                });
+            }
+
+            // completely clear the selector
+            this.length = en.clearSelector(this);
+
+            // reset selector size
+            this.length = en.resetSelector(this, replaceNode);
         }
 
         return this;
@@ -251,9 +276,9 @@ window.E = (function () {
         query
     */ 
     proto.attach = function (mixElem) {
-        if (typeof mixElem === "string") {
-            var nodeList = [];
+        var nodeList = [];
 
+        if (typeof mixElem === "string") {
             // discern query flags and separate string into array
             mixElem = mixElem.replace(/ {|{/g, "~{").replace(/ |,/g, " ").split(" ").filter(Boolean);
 
@@ -272,6 +297,40 @@ window.E = (function () {
             });
 
             // reset the main selector
+            this.length = en.resetSelector(this, nodeList);
+        } else {
+            // if the mixElem param is an object with no length
+
+            // if the mixElem contains just a single object not in an array format
+            if (!mixElem.length) {
+                // push query main query selector into a different array
+                en.forEach(this, (i) => {
+                    nodeList.push(this[i.index]);
+                });
+
+                // push single object into nodeList array
+                nodeList.push(mixElem);
+            } else {
+
+                // push main selector into nodeList array
+                en.forEach(this, (i) => {
+                    nodeList.push(this[i.index]);
+                });
+
+                // detect multi-dimensional arrays
+                en.forEach(mixElem, (i) => {
+                    // push multi-dimensional array items to nodeList
+                    if (mixElem[i.index].length) {
+                        en.forEach(mixElem[i.index], (x) => {
+                            nodeList.push(mixElem[i.index][x.index]);
+                        });
+                    } else {
+                        // push single nodes into nodeList array
+                        nodeList.push(mixElem[i.index]);
+                    }
+                });
+            }
+
             this.length = en.resetSelector(this, nodeList);
         }
 

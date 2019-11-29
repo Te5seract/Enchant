@@ -14,6 +14,8 @@
     <script src="../src/methods/queryHandling.js"></script>
     <script src="../src/selector.js"></script>
     <script src="../src/enchant.js"></script>
+
+    <!-- <script src="../src/merge/enchant-2.0.min.js"></script> -->
 </head>
 <body>
 
@@ -31,6 +33,10 @@
     
     <script>
         E(document.body).css("background-color: #333;");
+
+        var more = E(".elem2 {all}");
+
+        console.log(E(".elem {all}").attach([document, more]));
     </script>
 </body>
 </html>

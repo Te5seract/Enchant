@@ -36,7 +36,7 @@
 
         var more = E(".elem2 {all}");
 
-        console.log(E(".elem {all}").attach([document, more]));
+        console.log(E(".elem {all}").attach([document, document.body, more]));
     </script>
 </body>
 </html>

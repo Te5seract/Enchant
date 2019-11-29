@@ -221,83 +221,96 @@ window.__queryHandling__ = (function () {
             selectors child node list
         */ 
         proto.within = function (mixElem) {
-            for (let i = 0; i < this.length; i++) {
-                // this is just a modification of the script used for the main selector
-                var multi = en.string_has(mixElem, /{all}/),
-                even = en.string_has(mixElem, /{evn|even}/),
-                odd = en.string_has(mixElem, /{odd}/),
-                spec = en.string_has(mixElem, /&|>/),
-                ratio = en.string_has(mixElem, />>/);
+            var elems = [];
 
-                if (multi) { // if flags are used
-                    var mixElem = mixElem.split(" ")[0],
-                    elems = this[i].querySelectorAll(mixElem);
-                }
-                else if (even) {
-                    var mixElem = mixElem.split(" ")[0],
-                    even = this[i].querySelectorAll(mixElem);
-        
-                    var elems = [];
-                    for (let x = 0; x < even.length; x++) {
-                        if (x > 0 && x * 2 <= even.length) {
-                            elems.push(even[(x * 2) -1]);
+            if (typeof mixElem === "string") {
+                for (let i = 0; i < this.length; i++) {
+                    // this is just a modification of the script used for the main selector
+                    var multi = en.string_has(mixElem, /{all}/),
+                    even = en.string_has(mixElem, /{evn|even}/),
+                    odd = en.string_has(mixElem, /{odd}/),
+                    spec = en.string_has(mixElem, /&|>/),
+                    ratio = en.string_has(mixElem, />>/);
+
+                    if (multi) { // if flags are used
+                        var mixElem = mixElem.split(" ")[0],
+                        elems = this[i].querySelectorAll(mixElem);
+                    }
+                    else if (even) {
+                        var mixElem = mixElem.split(" ")[0],
+                        even = this[i].querySelectorAll(mixElem);
+            
+                        // var elems = [];
+                        for (let x = 0; x < even.length; x++) {
+                            if (x > 0 && x * 2 <= even.length) {
+                                elems.push(even[(x * 2) -1]);
+                            }
+                        }
+                    } 
+                    else if (odd) {
+                        var mixElem = mixElem.split(" ")[0]
+                        odd = this[i].querySelectorAll(mixElem);
+            
+                        // var elems = [];
+                        for (let x = 0; i < odd.length; x++) {
+                            if (x > 0 && (i * 2) -1 <= odd.length) {
+                                elems.push(odd[(x * 2) -2]);
+                            }
                         }
                     }
-                } 
-                else if (odd) {
-                    var mixElem = mixElem.split(" ")[0]
-                    odd = this[i].querySelectorAll(mixElem);
-        
-                    var elems = [];
-                    for (let x = 0; i < odd.length; x++) {
-                        if (x > 0 && (i * 2) -1 <= odd.length) {
-                            elems.push(odd[(x * 2) -2]);
+                    else if (spec) {
+                        var arg = mixElem.replace(/ {/, "~{").split("~")[1],
+                        mixElem = mixElem.replace(/ {/, "~{").split("~")[0],
+                        sp = this[i].querySelectorAll(mixElem),
+                        nums = arg.replace(/\D/g, "").split(""); // removes non digit items
+            
+                        // iterate through array of numbers
+                        // var elems = [];
+                        for (let x = 0; x < nums.length; x++) {
+                            elems.push(sp[Number(nums[x])]);
+                            
+                            if (arg.match(/last/i)) {
+                                elems.push(sp[sp.length -1]);
+                            }
                         }
-                    }
-                }
-                else if (spec) {
-                    var arg = mixElem.replace(/ {/, "~{").split("~")[1],
-                    mixElem = mixElem.replace(/ {/, "~{").split("~")[0],
-                    sp = this[i].querySelectorAll(mixElem),
-                    nums = arg.replace(/\D/g, "").split(""); // removes non digit items
-        
-                    // iterate through array of numbers
-                    var elems = [];
-                    for (let x = 0; x < nums.length; x++) {
-                        elems.push(sp[Number(nums[x])]);
-                        
+            
+                        // to only get the last item
                         if (arg.match(/last/i)) {
                             elems.push(sp[sp.length -1]);
                         }
                     }
-        
-                    // to only get the last item
-                    if (arg.match(/last/i)) {
-                        elems.push(sp[sp.length -1]);
-                    }
-                }
-                else if (ratio) {
-                    var arg = mixElem.replace(/ {/, "~{").split("~")[1],
-                    mixElem = mixElem.replace(/ {/, "~").split("~")[0],
-                    num1 = arg.replace(/\D/g, "").split("")[0],
-                    num2 = arg.replace(/\D/g, "").split("")[1],
-                    ratio = this[i].querySelectorAll(mixElem);
-        
-                    var elems = [];
-                    for (let x = 0; x < ratio.length; x++) {
-                        if (x >= num1 && i <= num2) {
-                            elems.push(ratio[i]);
-                        }
-                        else if (num2 === undefined && arg.match(/last/i)) {
-                            if (x >= num1 && x !== ratio.length) {
-                                elems.push(ratio[x]);
+                    else if (ratio) {
+                        var arg = mixElem.replace(/ {/, "~{").split("~")[1],
+                        mixElem = mixElem.replace(/ {/, "~").split("~")[0],
+                        num1 = arg.replace(/\D/g, "").split("")[0],
+                        num2 = arg.replace(/\D/g, "").split("")[1],
+                        ratio = this[i].querySelectorAll(mixElem);
+            
+                        // var elems = [];
+                        for (let x = 0; x < ratio.length; x++) {
+                            if (x >= num1 && i <= num2) {
+                                elems.push(ratio[i]);
+                            }
+                            else if (num2 === undefined && arg.match(/last/i)) {
+                                if (x >= num1 && x !== ratio.length) {
+                                    elems.push(ratio[x]);
+                                }
                             }
                         }
                     }
+                    else if (!multi || !even || !odd || !spec || !ratio) {
+                        // var elems = [];
+                        elems.push(this[i].querySelector(mixElem));
+                    }
                 }
-                else if (!multi || !even || !odd || !spec || !ratio) {
-                    var elems = [];
-                    elems.push(this[i].querySelector(mixElem));
+            }
+            else if (typeof mixElem === "object" && !mixElem.length) { // if just a singular object
+                // return [e];
+                elems.push(mixElem);
+            }
+            else if (typeof mixElem === "object" && mixElem.length > 1) { // for arrays
+                for (let i = 0; i < mixElem.length; i++) {
+                    elems.push(mixElem[i]);
                 }
             }
 

@@ -21,7 +21,16 @@
 
     <div class="elem"></div>
     <div class="elem"></div>
-    <div class="elem"></div>
+    <div class="elem">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </div>
     <div class="elem"></div>
     <div class="elem"></div>
 
@@ -36,7 +45,7 @@
 
         var more = E(".elem2 {all}");
 
-        console.log(E(".elem {all}").attach([document, document.body, more]));
+        console.log(E(".elem {>2}").within(E(".elem2 {all}")));
     </script>
 </body>
 </html>

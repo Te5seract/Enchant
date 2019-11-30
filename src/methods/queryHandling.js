@@ -226,17 +226,17 @@ export const __queryHandling__ = (function () {
             if (typeof mixElem === "string") {
                 for (let i = 0; i < this.length; i++) {
                     // this is just a modification of the script used for the main selector
-                    var multi = en.string_has(mixElem, /{all}/),
-                    even = en.string_has(mixElem, /{evn|even}/),
-                    odd = en.string_has(mixElem, /{odd}/),
-                    spec = en.string_has(mixElem, /&|>/),
-                    ratio = en.string_has(mixElem, />>/);
+                    var all = mixElem.match(/all/i),
+                    odd = mixElem.match(/odd/i),
+                    evn = mixElem.match(/even|evn/i),
+                    spec = mixElem.match(/&|{[0-9]+}|{last}/i),
+                    ratio = mixElem.match(/{[0-9] >> [0-9]}|{[0-9]>>[0-9]}|{[0-9 >> last]+}|{[0-9>>last]+}/i);
 
-                    if (multi) { // if flags are used
+                    if (all) { // if flags are used
                         var mixElem = mixElem.split(" ")[0],
                         elems = this[i].querySelectorAll(mixElem);
                     }
-                    else if (even) {
+                    else if (evn) {
                         var mixElem = mixElem.split(" ")[0],
                         even = this[i].querySelectorAll(mixElem);
             
@@ -268,10 +268,6 @@ export const __queryHandling__ = (function () {
                         // var elems = [];
                         for (let x = 0; x < nums.length; x++) {
                             elems.push(sp[Number(nums[x])]);
-                            
-                            if (arg.match(/last/i)) {
-                                elems.push(sp[sp.length -1]);
-                            }
                         }
             
                         // to only get the last item
@@ -298,7 +294,7 @@ export const __queryHandling__ = (function () {
                             }
                         }
                     }
-                    else if (!multi || !even || !odd || !spec || !ratio) {
+                    else if (!all || !evn || !odd || !spec || !ratio) {
                         // var elems = [];
                         elems.push(this[i].querySelector(mixElem));
                     }

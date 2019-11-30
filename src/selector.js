@@ -1,7 +1,4 @@
 export  const __EnchantQuerySelector__ = (function () {
-    "use strict";
-    ////////////////////////////////////////
-    // selector types
     // for the {all} flag
     function get_all (s) {
         s = s.replace(/ {|{/, "~{");
@@ -55,10 +52,6 @@ export  const __EnchantQuerySelector__ = (function () {
         var elems = [];
         for (let i = 0; i < nums.length; i++) {
             elems.push(sp[Number(nums[i])]);
-            
-            if (arg.match(/last/i)) {
-                elems.push(sp[sp.length -1]);
-            }
         }
 
         // to only get the last item
@@ -91,35 +84,32 @@ export  const __EnchantQuerySelector__ = (function () {
 
         return elems;
     };
-
-    ////////////////////////////////////////
-    // public functions
     return {
         selector : function (e) {
             if (typeof e === "string") {
-                var 
-                multi = __EnchantQuerySelector__.string_has(e, /{all}/),
-                even = __EnchantQuerySelector__.string_has(e, /{evn|even}/),
-                odd = __EnchantQuerySelector__.string_has(e, /{odd}/),
-                spec = __EnchantQuerySelector__.string_has(e, /&|{>.*?}/),
-                ratio = __EnchantQuerySelector__.string_has(e, />>/);
+                var all = e.match(/all/i),
+                odd = e.match(/odd/i),
+                evn = e.match(/even|evn/i),
+                spec = e.match(/&|{[0-9]+}|{last}/i),
+                ratio = e.match(/{[0-9] >> [0-9]}|{[0-9]>>[0-9]}|{[0-9 >> last]+}|{[0-9>>last]+}/i),
+                el;
 
-                if (multi) { // if flags are used
-                    var el = get_all(e);
+                if (all) {
+                    el = get_all(e);
                 }
-                else if (even) {
-                    var el = get_even(e);
-                } 
                 else if (odd) {
-                    var el = get_odd(e);
+                    el = get_odd(e);
+                }
+                else if (evn) {
+                    el = get_even(e);
                 }
                 else if (spec) {
-                    var el = get_spec(e);
+                    el = get_spec(e);
                 }
                 else if (ratio) {
-                    var el = get_ratio(e);
+                    el = get_ratio(e);
                 }
-                else if (!multi || !even || !odd || !spec || !ratio) {
+                else if (!all || !evn || !odd || !spec || !ratio) {
                     var el = [];
                     el.push(document.querySelector(e));
                 }
@@ -133,25 +123,6 @@ export  const __EnchantQuerySelector__ = (function () {
                 return e;
             }
         },
-
-        // this mainly checks if a certain flag is used
-        string_has : function (s, k) {
-            var rg = new RegExp(s, "gi"),
-            /*
-                make the argument syntax flexible, eg:
-
-                all = valid
-                sdlfkall = valid
-            */ 
-            s_key = k.toString().replace(/{|}|\/|\//g, ""); 
-
-            if (s.match(k) || s.match(s_key)) {
-                return true;
-            } else {
-                return false;
-            }
-        },
-
         ////////////////////////////////////////
         // loops through arrays
         forEach : function (arr, fn) {
@@ -180,5 +151,5 @@ export  const __EnchantQuerySelector__ = (function () {
 
             return el.length;
         },
-    };
+    }
 })();

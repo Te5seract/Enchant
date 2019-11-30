@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-    <script type="module" src="../src/enchant.js"></script>
+    <!-- <script type="module" src="../src/enchant.js"></script> -->
 
-    <!-- <script src="../src/merge/enchant-1.0.min.js"></script> -->
+    <script src="../src/merge/enchant-1.0.min.js"></script>
 </head>
 <body>
 
@@ -38,9 +38,17 @@
 
         E(document.body).css("background-color: #333;");
 
-        var more = E(".elem2 {all}");
+        E(".elem2 {all}").css("background-color: red; width: 100px; height: 100px; display: inline-block;");
 
-        console.log(E(".elem {>2}").within(E(".elem2 {all}")));
+        E(".elem2 {1 >> last}").css("background-color: blue", true);
+
+        console.log(E(".elem2 {last}"))
+
+        // E("span {all}").css("width: 20px; height: 20px; display: inline-block; background-color: yellow;");
+
+        // E(".elem {2}").within("span {1 & last}").css("width: 20px; height: 20px; display: inline-block; background-color: orange;")
+
+        // console.log(E(".elem {>2}").within(E(".elem2 {all}")));
     </script>
 </body>
 </html>

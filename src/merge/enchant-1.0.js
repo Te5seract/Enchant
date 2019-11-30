@@ -56,10 +56,6 @@ window.__E__ = (function () {
         var elems = [];
         for (let i = 0; i < nums.length; i++) {
             elems.push(sp[Number(nums[i])]);
-            
-            if (arg.match(/last/i)) {
-                elems.push(sp[sp.length -1]);
-            }
         }
 
         // to only get the last item
@@ -92,35 +88,33 @@ window.__E__ = (function () {
 
         return elems;
     };
-
-    ////////////////////////////////////////
-    // public functions
+    
     return {
         selector : function (e) {
             if (typeof e === "string") {
-                var 
-                multi = __E__.string_has(e, /{all}/),
-                even = __E__.string_has(e, /{evn|even}/),
-                odd = __E__.string_has(e, /{odd}/),
-                spec = __E__.string_has(e, /&|{>.*?}/),
-                ratio = __E__.string_has(e, />>/);
+                var all = e.match(/all/i),
+                odd = e.match(/odd/i),
+                evn = e.match(/even|evn/i),
+                spec = e.match(/&|{[0-9]+}|{last}/i),
+                ratio = e.match(/{[0-9] >> [0-9]}|{[0-9]>>[0-9]}|{[0-9 >> last]+}|{[0-9>>last]+}/i),
+                el;
 
-                if (multi) { // if flags are used
-                    var el = get_all(e);
+                if (all) {
+                    el = get_all(e);
                 }
-                else if (even) {
-                    var el = get_even(e);
-                } 
                 else if (odd) {
-                    var el = get_odd(e);
+                    el = get_odd(e);
+                }
+                else if (evn) {
+                    el = get_even(e);
                 }
                 else if (spec) {
-                    var el = get_spec(e);
+                    el = get_spec(e);
                 }
                 else if (ratio) {
-                    var el = get_ratio(e);
+                    el = get_ratio(e);
                 }
-                else if (!multi || !even || !odd || !spec || !ratio) {
+                else if (!all || !evn || !odd || !spec || !ratio) {
                     var el = [];
                     el.push(document.querySelector(e));
                 }
@@ -134,25 +128,6 @@ window.__E__ = (function () {
                 return e;
             }
         },
-
-        // this mainly checks if a certain flag is used
-        string_has : function (s, k) {
-            var rg = new RegExp(s, "gi"),
-            /*
-                make the argument syntax flexible, eg:
-
-                all = valid
-                sdlfkall = valid
-            */ 
-            s_key = k.toString().replace(/{|}|\/|\//g, ""); 
-
-            if (s.match(k) || s.match(s_key)) {
-                return true;
-            } else {
-                return false;
-            }
-        },
-
         ////////////////////////////////////////
         // loops through arrays
         forEach : function (arr, fn) {
@@ -441,17 +416,17 @@ window.E = (function () {
         if (typeof mixElem === "string") {
             for (let i = 0; i < this.length; i++) {
                 // this is just a modification of the script used for the main selector
-                var multi = en.string_has(mixElem, /{all}/),
-                even = en.string_has(mixElem, /{evn|even}/),
-                odd = en.string_has(mixElem, /{odd}/),
-                spec = en.string_has(mixElem, /&|>/),
-                ratio = en.string_has(mixElem, />>/);
+                var all = mixElem.match(/all/i),
+                odd = mixElem.match(/odd/i),
+                evn = mixElem.match(/even|evn/i),
+                spec = mixElem.match(/&|{[0-9]+}|{last}/i),
+                ratio = mixElem.match(/{[0-9] >> [0-9]}|{[0-9]>>[0-9]}|{[0-9 >> last]+}|{[0-9>>last]+}/i);
 
-                if (multi) { // if flags are used
+                if (all) { // if flags are used
                     var mixElem = mixElem.split(" ")[0],
                     elems = this[i].querySelectorAll(mixElem);
                 }
-                else if (even) {
+                else if (evn) {
                     var mixElem = mixElem.split(" ")[0],
                     even = this[i].querySelectorAll(mixElem);
         
@@ -483,10 +458,6 @@ window.E = (function () {
                     // var elems = [];
                     for (let x = 0; x < nums.length; x++) {
                         elems.push(sp[Number(nums[x])]);
-                        
-                        if (arg.match(/last/i)) {
-                            elems.push(sp[sp.length -1]);
-                        }
                     }
         
                     // to only get the last item
@@ -513,7 +484,7 @@ window.E = (function () {
                         }
                     }
                 }
-                else if (!multi || !even || !odd || !spec || !ratio) {
+                else if (!all || !evn || !odd || !spec || !ratio) {
                     // var elems = [];
                     elems.push(this[i].querySelector(mixElem));
                 }

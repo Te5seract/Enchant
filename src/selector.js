@@ -1,4 +1,4 @@
-window.__EnchantQuerySelector__ = (function () {
+export  const __EnchantQuerySelector__ = (function () {
     "use strict";
     ////////////////////////////////////////
     // selector types

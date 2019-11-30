@@ -1,4 +1,4 @@
-window.__CSSHandler__ = (function () {
+export const __CSSHandler__ = (function () {
     function methodList (proto, en) {
         /*////////////////////////////////////////
             CSS method adds CSS to the selected node(s)

@@ -1,4 +1,4 @@
-window.__queryHandling__ = (function () {
+export const __queryHandling__ = (function () {
     "use strict";
 
     function methodList (proto, en) {

@@ -6,16 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-    <script src="../src/methods/attrHandling.js"></script>
-    <script src="../src/methods/cssHandling.js"></script>
-    <script src="../src/methods/domHandling.js"></script>
-    <script src="../src/methods/eventHandling.js"></script>
-    <script src="../src/methods/miscHandling.js"></script>
-    <script src="../src/methods/queryHandling.js"></script>
-    <script src="../src/selector.js"></script>
-    <script src="../src/enchant.js"></script>
+    <script type="module" src="../src/enchant.js"></script>
 
-    <!-- <script src="../src/merge/enchant-2.0.min.js"></script> -->
+    <!-- <script src="../src/merge/enchant-1.0.min.js"></script> -->
 </head>
 <body>
 
@@ -40,7 +33,9 @@
     <div class="elem2"></div>
     <div class="elem2"></div>
     
-    <script>
+    <script type="module">
+        import { E } from "./../src/enchant.js";
+
         E(document.body).css("background-color: #333;");
 
         var more = E(".elem2 {all}");

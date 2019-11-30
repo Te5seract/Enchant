@@ -1,4 +1,4 @@
-window.__miscHandler__ = (function () {
+export const __miscHandler__ = (function () {
     function methodList (proto, en) {
         /*////////////////////////////////////////
             For each method is a loop and will output 

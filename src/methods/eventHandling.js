@@ -1,4 +1,4 @@
-window.__eventHandling__ = (function () {
+export const __eventHandling__ = (function () {
     function methodList (proto, en) {
         /*////////////////////////////////////////
             Events method ties multiple event listeners to 

@@ -1,4 +1,12 @@
-window.E = (function () {
+import { __EnchantQuerySelector__ } from "./selector.js";
+import { __queryHandling__ } from "./methods/queryHandling.js";
+import { __eventHandling__ } from "./methods/eventHandling.js";
+import { __CSSHandler__ } from "./methods/cssHandling.js";
+import { __attrHandler__ } from "./methods/attrHandling.js";
+import { __DOMHandler__ } from "./methods/domHandling.js";
+import { __miscHandler__ } from "./methods/miscHandling.js";
+
+export const E = (function () {
     "use strict";
 
     var E, // library alias

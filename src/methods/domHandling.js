@@ -1,4 +1,4 @@
-window.__DOMHandler__ = (function () {
+export const __DOMHandler__ = (function () {
     "use strict";
 
     function methodList (proto, en) {

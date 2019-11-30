@@ -1,4 +1,4 @@
-window.__attrHandler__ = (function () {
+export const __attrHandler__ = (function () {
     "use strict";
     
     function methodList (proto, en) {

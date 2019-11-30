@@ -41,7 +41,7 @@ export  const __EnchantQuerySelector__ = (function () {
         return elems;
     };
 
-    // for the {>x} or {x & y & z} flag
+    // for the {x} or {x & y & z} flag
     function get_spec (s) {
         var arg = s.replace(/ {|{/, "~{").split("~")[1],
         s = s.replace(/ {|{/, "~{").split("~")[0],

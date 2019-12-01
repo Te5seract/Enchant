@@ -38,17 +38,11 @@
 
         E(document.body).css("background-color: #333;");
 
-        E(".elem2 {all}").css("background-color: red; width: 100px; height: 100px; display: inline-block;");
+        console.log(E(".elem").make("main", 12))
 
-        E(".elem2 {1 >> last}").css("background-color: blue", true);
-
-        console.log(E(".elem2 {last}"))
-
-        // E("span {all}").css("width: 20px; height: 20px; display: inline-block; background-color: yellow;");
-
-        // E(".elem {2}").within("span {1 & last}").css("width: 20px; height: 20px; display: inline-block; background-color: orange;")
-
-        // console.log(E(".elem {>2}").within(E(".elem2 {all}")));
+        E(window).events("resize", (e) => {
+            console.log(window.innerWidth)
+        });
     </script>
 </body>
 </html>

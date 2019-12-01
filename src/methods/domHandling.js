@@ -230,6 +230,8 @@ export const __DOMHandler__ = (function () {
             Make method creates a new element or more
         */
         proto.make = function (strType, intCount, strAttr, strVal) {
+            var newElems = [];
+
             if (!intCount) {
                 intCount = 1;
             }
@@ -241,11 +243,23 @@ export const __DOMHandler__ = (function () {
                     if (strAttr) {
                         elem.setAttribute(strAttr, strVal);
                     }
+
+                    if (!strAttr) {
+                        newElems.push(elem);
+                    }
                     
                     this[i].appendChild(elem);
                 }
             }
 
+            if (!strAttr) {
+                // clear away anything in the main selector
+                this.length = en.clearSelector(this);
+
+                // set newElems array to be the main selector
+                this.length = en.resetSelector(this, newElems);
+            }
+                
             return this;
         };
 

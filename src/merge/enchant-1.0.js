@@ -670,6 +670,13 @@ window.E = (function () {
         return this;
     }; // end set attr
 
+    /*////////////////////////////////////////
+        Check for a class in class list
+    */
+    proto.hasClass = function (strClass) {
+        return this[0].classList.contains(strClass);
+    }; // end has class
+
     ////////////////////////////////////////
     // DOM HANDLER
     ////////////////////////////////////////

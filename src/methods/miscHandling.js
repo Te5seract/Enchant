@@ -43,13 +43,17 @@ export const __miscHandler__ = (function () {
             url : "",
             data : ""
         };
-        proto.ajax = function (ajxOps, fn) {
+        proto.ajax = function (ajxOps, fn, boolHeaders) {
             const ops = ajxOps;
             var xhr = new XMLHttpRequest();
 
+            if (boolHeaders === undefined) {
+                boolHeaders = true;
+            }
+
             xhr.open(ops.method, ops.url);
 
-            if (ops.method.match(/post/i)) {
+            if (boolHeaders) {
                 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             }

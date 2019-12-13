@@ -33,8 +33,52 @@ export const __miscHandler__ = (function () {
 
                 return found;
             }
+        }; // end for each
+
+        /*////////////////////////////////////////
+            AJAX
+        */
+        var ajxOps = {
+            method : "",
+            url : "",
+            data : ""
         };
-    };
+        proto.ajax = function (ajxOps, fn) {
+            const ops = ajxOps;
+            var xhr = new XMLHttpRequest();
+
+            xhr.open(ops.method, ops.url);
+
+            if (ops.method.match(/post/i)) {
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            }
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var jsn = {};
+                    for (let i = 0; i < JSON.parse(xhr.responseText).length; i++) {
+                        for (let x in JSON.parse(xhr.responseText)[i]) {
+                            jsn[x] = JSON.parse(xhr.responseText)[i][x];
+                        }
+                    }
+
+                    fn({
+                        responseTxt : xhr.responseText,
+                        json : jsn ? jsn : null
+                    });
+                }
+            };
+
+            if (ops.method.match(/post/i)) {
+                xhr.send(ops.data);
+            } else {
+                xhr.send();
+            }
+        }; // end ajax
+
+        return this;
+    }; // end of method list
 
     return {
         methods : function (proto, en) {

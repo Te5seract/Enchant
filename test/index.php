@@ -6,13 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-    <script type="module" src="../src/enchant.js"></script>
+    <!-- <script type="module" src="../src/enchant.js"></script> -->
 
-    <!-- <script src="../src/merge/enchant-1.0.min.js"></script> -->
+    <script src="../src/merge/enchant-1.0.min.js"></script>
 </head>
 <body>
 
-    <div class="elem extra another"></div>
+    <div class="elem">
+        <a class="test"></a>
+        <a class="test"></a>
+        <a class="test"></a>
+        <a class="test"></a>
+        <a class="test"></a>
+    </div>
     <div class="elem"></div>
     <div class="elem">
         <span></span>
@@ -37,11 +43,15 @@
         import { E } from "./../src/enchant.js";
 
         E(document.body).css("background-color: #333;");
-
-        console.log(E(".elem").hasClass("someting"))
-
-        E(window).events("resize", (e) => {
-            console.log(window.innerWidth)
+        
+        E().ajax({
+            method : "POST",
+            url : "test.php",
+            data : "name=test&name2=anothertest&name3=lasttest"
+        }, (x) => {
+            E(x.json).forEach((i) => {
+                console.log(i.node);
+            });
         });
     </script>
 </body>

@@ -119,7 +119,7 @@ export  const __EnchantQuerySelector__ = (function () {
             else if (typeof e === "object" && !e.length) { // if just a singular object
                 return [e];
             }
-            else if (typeof e === "object" && e.length > 1) { // for arrays
+            else if (typeof e === "object" && e.length >= 1) { // for arrays
                 return e;
             }
         },

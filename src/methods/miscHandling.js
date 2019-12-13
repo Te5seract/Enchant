@@ -79,9 +79,10 @@ export const __miscHandler__ = (function () {
             } else {
                 xhr.send();
             }
+
+            return this;
         }; // end ajax
 
-        return this;
     }; // end of method list
 
     return {

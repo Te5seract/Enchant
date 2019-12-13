@@ -124,7 +124,7 @@ window.__E__ = (function () {
             else if (typeof e === "object" && !e.length) { // if just a singular object
                 return [e];
             }
-            else if (typeof e === "object" && e.length > 1) { // for arrays
+            else if (typeof e === "object" && e.length >= 1) { // for arrays
                 return e;
             }
         },
@@ -494,7 +494,7 @@ window.E = (function () {
             // return [e];
             elems.push(mixElem);
         }
-        else if (typeof mixElem === "object" && mixElem.length > 1) { // for arrays
+        else if (typeof mixElem === "object" && mixElem.length >= 1) { // for arrays
             for (let i = 0; i < mixElem.length; i++) {
                 elems.push(mixElem[i]);
             }
@@ -1075,39 +1075,87 @@ window.E = (function () {
     ////////////////////////////////////////
 
     /*////////////////////////////////////////
-            For each method is a loop and will output 
-            a match after the function argument if a match
-            is found
-        */
-        proto.forEach = function (fn, mixFromCollection) {
-            var collection = [];
-            for (let i = 0; i < this.length; i++) {
-                fn({
-                    node : this[i],
-                    index : i
-                }, i);
+        For each method is a loop and will output 
+        a match after the function argument if a match
+        is found
+    */
+    proto.forEach = function (fn, mixFromCollection) {
+        var collection = [];
+        for (let i = 0; i < this.length; i++) {
+            fn({
+                node : this[i],
+                index : i
+            }, i);
 
-                collection.push(this[i]);
+            collection.push(this[i]);
+        }
+        
+        // if no match is searched for return the function to the library
+        if (!mixFromCollection) {
+            return this;
+        } else {
+            // return the result if a match is found
+            var found;
+            for (let i = 0; i < collection.length; i++) {
+                if (mixFromCollection === collection[i]) {
+                    found = collection[i];
+                    break; 
+                } else {
+                    found = false;
+                }
             }
-            
-            // if no match is searched for return the function to the library
-            if (!mixFromCollection) {
-                return this;
-            } else {
-                // return the result if a match is found
-                var found;
-                for (let i = 0; i < collection.length; i++) {
-                    if (mixFromCollection === collection[i]) {
-                        found = collection[i];
-                        break; 
-                    } else {
-                        found = false;
+
+            return found;
+        }
+    }; // foreach end
+
+    /*////////////////////////////////////////
+        AJAX
+    */
+    var ajxOps = {
+        method : "",
+        url : "",
+        data : ""
+    };
+    proto.ajax = function (ajxOps, fn, boolHeaders) {
+        const ops = ajxOps;
+        var xhr = new XMLHttpRequest();
+
+        if (boolHeaders === undefined) {
+            boolHeaders = true;
+        }
+
+        xhr.open(ops.method, ops.url);
+
+        if (boolHeaders) {
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        }
+
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var jsn = {};
+                for (let i = 0; i < JSON.parse(xhr.responseText).length; i++) {
+                    for (let x in JSON.parse(xhr.responseText)[i]) {
+                        jsn[x] = JSON.parse(xhr.responseText)[i][x];
                     }
                 }
 
-                return found;
+                fn({
+                    responseTxt : xhr.responseText,
+                    json : jsn ? jsn : null
+                });
             }
-        }; // foreach end
+        };
+
+        if (ops.method.match(/post/i)) {
+            xhr.send(ops.data);
+        } else {
+            xhr.send();
+        }
+
+        return this;
+    }; // end ajax      
 
     ////////////////////////////////////////
     // setup

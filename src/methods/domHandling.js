@@ -177,12 +177,14 @@ export const __DOMHandler__ = (function () {
 
                 en.forEach(this, (i) => {
                     if (strID.match(/id|identifier/i)) {
-                        if (this[i.index].hasAttribute("class")) {
-                            idList.push("."+this[i.index].getAttribute("class"));
-                        }
+                        if (this[i.index].localName) {
+                            if (this[i.index].hasAttribute("class")) {
+                                idList.push("."+this[i.index].getAttribute("class"));
+                            }
 
-                        if (this[i.index].hasAttribute("id")) {
-                            idList.push("#"+this[i.index].getAttribute("id"));
+                            if (this[i.index].hasAttribute("id")) {
+                                idList.push("#"+this[i.index].getAttribute("id"));
+                            }
                         }
                     }
                     else if (strID.match(/all|both/)) {

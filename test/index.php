@@ -40,7 +40,7 @@
     <div class="elem2"></div>
     
     <script type="module">
-        import { E } from "./../src/enchant.js";
+        // import { E } from "./../src/enchant.js";
 
         E(document.body).css("background-color: #333;");
         

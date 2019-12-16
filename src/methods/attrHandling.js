@@ -25,6 +25,14 @@ export const __attrHandler__ = (function () {
         }; // end del attr
 
         /*////////////////////////////////////////
+            Get attr method returns the attribute value of 
+            a selected attribute
+        */
+        proto.getAttr = function (strType) {
+            return this[0].getAttribute(strType);
+        };
+
+        /*////////////////////////////////////////
             Het attr method checks if an attribute exists on node
         */
         proto.hasAttr = function (strType) {

@@ -92,12 +92,18 @@ window.__E__ = (function () {
     return {
         selector : function (e) {
             if (typeof e === "string") {
-                var all = e.match(/all/i),
-                odd = e.match(/odd/i),
-                evn = e.match(/even|evn/i),
-                spec = e.match(/&|{[0-9]+}|{last}/i),
-                ratio = e.match(/{[0-9] >> [0-9]}|{[0-9]>>[0-9]}|{[0-9 >> last]+}|{[0-9>>last]+}/i),
-                el;
+                // split selector from flag
+                var eFlag = e.replace(/{/g, "~{").split("~");
+                var el;
+
+                // confirm that a flag was used
+                if (eFlag[1]) {
+                    var all = eFlag[1].match(/all/i),
+                    odd = eFlag[1].match(/odd/i),
+                    evn = eFlag[1].match(/even|evn/i),
+                    spec = eFlag[1].match(/&|{[0-9]+}|{last}/i),
+                    ratio = eFlag[1].match(/{[0-9] >> [0-9]}|{[0-9]>>[0-9]}|{[0-9 >> last]+}|{[0-9>>last]+}/i);
+                }
 
                 if (all) {
                     el = get_all(e);

@@ -12,39 +12,24 @@
 </head>
 <body>
 
-    <div class="elem">
-        <a class="test"></a>
-        <a class="test"></a>
-        <a class="test"></a>
-        <a class="test"></a>
-        <a class="test"></a>
+    <div class="container">
+        <div class="elem2-all-elem"></div>
+        <div class="elem2-all-elem"></div>
+        <div class="elem2-all-elem"></div>
+        <div class="elem2-all-elem"></div>
+        <div class="elem2-all-elem"></div>
     </div>
-    <div class="elem"></div>
-    <div class="elem">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <a href=""></a>
-        <a href=""></a>
-        <a href=""></a>
-        <a href=""></a>
-    </div>
-    <div class="elem"></div>
-    <div class="elem"></div>
-
-    <div class="elem2-all-elem"></div>
-    <div class="elem2-all-elem"></div>
-    <div class="elem2-all-elem"></div>
-    <div class="elem2-all-elem"></div>
-    <div class="elem2-all-elem"></div>
     
     <script type="module">
         import { E } from "./../src/enchant.js";
 
         E(document.body).css("background-color: #333;");
 
-        console.log(E(".elem2-all-elem{all}"))
+        E(".elem2-all-elem {all}").css("width: 100px; height: 100px; float: left; margin: 3px; background-color: red");
+
+        // var el = document.createElement("span");
+
+        E(".container").prepend(E().create("span", 3), E(".elem2-all-elem {2}")[0]);
         
         // E().ajax({
         //     method : "POST",

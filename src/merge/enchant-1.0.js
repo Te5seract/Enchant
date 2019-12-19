@@ -1086,6 +1086,62 @@ window.E = (function () {
         });
     }; // end editable
 
+    /*////////////////////////////////////////
+        Create method creates an element but doesn't append it
+    */
+    proto.create = function (strType, intCount, strAttr, strVal) {
+        if (!intCount) {
+            intCount = 1;
+        }
+
+        var created = [];
+        for (let i = 0; i < intCount; i++) {
+            var elem = document.createElement(strType);
+
+            if (strAttr) {
+                elem.setAttribute(strAttr, strVal);
+            }
+            
+            created.push(elem);
+        }
+
+        // clear main selector
+        this.length = en.clearSelector(this);
+
+        // reset main selector
+        this.length = en.resetSelector(this, created);
+
+        return this;
+    }; // end create
+
+    /*////////////////////////////////////////
+        Prepend method adds an element before another
+    */
+    proto.prepend = function (objNode, objRefNode) {
+        if (objNode.length > 0) {
+            en.forEach(objNode, (i) => {
+                this[0].insertBefore(objNode[i.index], objRefNode);
+            });
+        } else {
+            this[0].insertBefore(objNode, objRefNode);
+        }
+
+        return this;
+    }; // end prepend
+
+    /*////////////////////////////////////////
+        Apend method appends elements to the selected node
+    */
+    proto.append = function (objNode) {
+        en.forEach(this, (i) => {
+            en.forEach(objNode, (x) => {
+                this[i.index].appendChild(objNode[x.index]);
+            });
+        });
+
+        return this;
+    }; // end append
+
     ////////////////////////////////////////
     // MISC HANDLER
     ////////////////////////////////////////

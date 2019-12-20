@@ -427,11 +427,24 @@ export const __DOMHandler__ = (function () {
             Prepend method adds an element before another
         */
         proto.prepend = function (objNode, objRefNode) {
-            if (objNode.length > 0) {
-                en.forEach(objNode, (i) => {
+            if (objNode.length && objRefNode.length) {
+                en.forEach(objRefNode, (i) => {
+                    en.forEach(objNode, (x) => {
+                        this[0].insertBefore(objNode[x.index], objRefNode[i.index]);
+                    });
+                });
+            }
+            else if (!objNode.length && objRefNode.length) {
+                en.forEach(objRefNode, (i) => {
+                    this[0].insertBefore(objNode, objRefNode[i.index]);
+                });
+            }
+            else if (objNode.length && !objRefNode.length) {
+                en.forEach(objRefNode, (i) => {
                     this[0].insertBefore(objNode[i.index], objRefNode);
                 });
-            } else {
+            }
+            else if (!objNode.length && !objRefNode.length) {
                 this[0].insertBefore(objNode, objRefNode);
             }
 
@@ -443,9 +456,14 @@ export const __DOMHandler__ = (function () {
         */
         proto.append = function (objNode) {
             en.forEach(this, (i) => {
-                en.forEach(objNode, (x) => {
-                    this[i.index].appendChild(objNode[x.index]);
-                });
+                if (objNode.length) {
+                    en.forEach(objNode, (x) => {
+                        this[i.index].appendChild(objNode[x.index]);
+                    });
+                } 
+                else if (!objNode.length) {
+                    this[i.index].appendChild(objNode);
+                }
             });
 
             return this;

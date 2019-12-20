@@ -19,17 +19,25 @@
         <div class="elem2-all-elem"></div>
         <div class="elem2-all-elem"></div>
     </div>
+
+    <div class="elem"></div>
+    <div class="elem"></div>
+    <div class="elem"></div>
+    <div class="elem"></div>
+    <div class="elem"></div>
     
     <script type="module">
         import { E } from "./../src/enchant.js";
 
         E(document.body).css("background-color: #333;");
 
-        E(".elem2-all-elem {all}").css("width: 100px; height: 100px; float: left; margin: 3px; background-color: red");
+        // E(".elem2-all-elem {all}").css("width: 100px; height: 100px; float: left; margin: 3px; background-color: red");
+
+        console.log(E(".elem2-all-elem {all}").attach(".elem {all}"));
 
         // var el = document.createElement("span");
 
-        E(".container").prepend(E().create("span", 3), E(".elem2-all-elem {2}")[0]);
+        // E(".container").prepend(E().create("span", 3), E(".elem2-all-elem {2}")[0]);
         
         // E().ajax({
         //     method : "POST",

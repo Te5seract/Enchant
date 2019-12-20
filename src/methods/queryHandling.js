@@ -76,9 +76,9 @@ export const __queryHandling__ = (function () {
                 // add nodes to nodeList array
                 en.forEach(mixElem, (i) => {
                     // get array of selectors: [a, a, a, a]
-                    en.forEach(en.selector(mixElem[i.index]), (x) => {
+                    en.forEach(en.selector(mixElem[i.index].replace("~", " ")), (x) => {
                         // push individual nodes into nodeList: a, a, a, a
-                        nodeList.push(en.selector(mixElem[i.index])[x.index]);
+                        nodeList.push(en.selector(mixElem[i.index].replace("~", " "))[x.index]);
                     });
                 });
 

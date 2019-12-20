@@ -451,6 +451,13 @@ export const __DOMHandler__ = (function () {
             return this;
         }; // end append
 
+        /*////////////////////////////////////////
+            Parent method can get the parent node
+        */
+        proto.parent = function () {
+            this[0].parentNode
+        }; // end parent
+
     }; // end of method list
 
     

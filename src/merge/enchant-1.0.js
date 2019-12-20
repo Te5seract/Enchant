@@ -271,9 +271,9 @@ window.E = (function () {
             // add nodes to nodeList array
             en.forEach(mixElem, (i) => {
                 // get array of selectors: [a, a, a, a]
-                en.forEach(en.selector(mixElem[i.index]), (x) => {
+                en.forEach(en.selector(mixElem[i.index].replace("~", " ")), (x) => {
                     // push individual nodes into nodeList: a, a, a, a
-                    nodeList.push(en.selector(mixElem[i.index])[x.index]);
+                    nodeList.push(en.selector(mixElem[i.index].replace("~", " "))[x.index]);
                 });
             });
 
@@ -319,95 +319,95 @@ window.E = (function () {
     }; // attach method end
 
     
-        /*////////////////////////////////////////
-            detach items from main selector
-        */ 
-        proto.detach = function (mixRemove) {
-            var detachList = [],
-            nodeList = [];
+    /*////////////////////////////////////////
+        detach items from main selector
+    */ 
+    proto.detach = function (mixRemove) {
+        var detachList = [],
+        nodeList = [];
 
-            if (typeof mixRemove === "string") {
-                mixRemove = mixRemove.replace(/{| {/g, "~{").replace(/ |,/g, " ").split(" ").filter(Boolean);
-                
-                // cleanup and push nodes to detach into detachList array
-                en.forEach(mixRemove, (i) => {
-                    // remove the ~ from any flags in 
-                    mixRemove[i.index] = mixRemove[i.index].replace("~", " ");
+        if (typeof mixRemove === "string") {
+            mixRemove = mixRemove.replace(/{| {/g, "~{").replace(/ |,/g, " ").split(" ").filter(Boolean);
+            
+            // cleanup and push nodes to detach into detachList array
+            en.forEach(mixRemove, (i) => {
+                // remove the ~ from any flags in 
+                mixRemove[i.index] = mixRemove[i.index].replace("~", " ");
 
-                    // push individual nodes out from the selector into the detachList array
-                    en.forEach(en.selector(mixRemove[i.index]), (x) => {
-                        detachList.push(en.selector(mixRemove[i.index])[x.index]);
-                    });  
-                });
+                // push individual nodes out from the selector into the detachList array
+                en.forEach(en.selector(mixRemove[i.index]), (x) => {
+                    detachList.push(en.selector(mixRemove[i.index])[x.index]);
+                });  
+            });
 
-                // remove nodes in main selector that match the ones in detach list
-                en.forEach(this, (i) => {
-                    en.forEach(detachList, (x) => {
-                        if (detachList[x.index] === this[i.index]) {
-                            delete this[i.index];
-                        }
-                    });
-                });
-
-                // add nodes in selector to nodeList array if they're not undefined
-                en.forEach(this, (i) => {
-                    if (this[i.index] !== undefined) {
-                        nodeList.push(this[i.index]);
+            // remove nodes in main selector that match the ones in detach list
+            en.forEach(this, (i) => {
+                en.forEach(detachList, (x) => {
+                    if (detachList[x.index] === this[i.index]) {
+                        delete this[i.index];
                     }
                 });
+            });
 
-                // completely clear the selector
-                this.length = en.clearSelector(this);
-
-                // reset the main selector
-                this.length = en.resetSelector(this, nodeList);
-            } else {
-                // if mixRemove is an object
-                if (!mixRemove.length) {
-                    // if only one object is in the selector
-                    detachList.push(mixRemove);
-                } else {
-                    en.forEach(mixRemove, (i) => {
-                        // push detach items as array into detachList array
-                        if (!mixRemove.length){
-                            detachList.push(mixRemove[i.index]);
-                        } else {
-                            // detect multi-dimensional arrays
-                            if (mixRemove[i.index].length) {
-                                // if a multi-dimensional array is detected get nodes from it and push it into the nodeList
-                                en.forEach(mixRemove[i.index], (x) => {
-                                    detachList.push(mixRemove[i.index][x.index]);
-                                });
-                            } else {
-                                // put non multi-dimensional items into detachList array
-                                detachList.push(mixRemove[i.index]);
-                            }
-                        } 
-                    });
+            // add nodes in selector to nodeList array if they're not undefined
+            en.forEach(this, (i) => {
+                if (this[i.index] !== undefined) {
+                    nodeList.push(this[i.index]);
                 }
+            });
 
-                // remove nodes in the main query selector if it matches node in detach array
-                en.forEach(this, (i) => {
-                    en.forEach(detachList, (x) => {
-                        if (detachList[x.index] === this[i.index]) {
-                            delete this[i.index];
+            // completely clear the selector
+            this.length = en.clearSelector(this);
+
+            // reset the main selector
+            this.length = en.resetSelector(this, nodeList);
+        } else {
+            // if mixRemove is an object
+            if (!mixRemove.length) {
+                // if only one object is in the selector
+                detachList.push(mixRemove);
+            } else {
+                en.forEach(mixRemove, (i) => {
+                    // push detach items as array into detachList array
+                    if (!mixRemove.length){
+                        detachList.push(mixRemove[i.index]);
+                    } else {
+                        // detect multi-dimensional arrays
+                        if (mixRemove[i.index].length) {
+                            // if a multi-dimensional array is detected get nodes from it and push it into the nodeList
+                            en.forEach(mixRemove[i.index], (x) => {
+                                detachList.push(mixRemove[i.index][x.index]);
+                            });
+                        } else {
+                            // put non multi-dimensional items into detachList array
+                            detachList.push(mixRemove[i.index]);
                         }
-                    });
+                    } 
                 });
+            }
 
-                // get left over query nodes and push them into nodesList array
-                en.forEach(this, (i) => {
-                    if (this[i.index] !== undefined) {
-                        nodeList.push(this[i.index]);
+            // remove nodes in the main query selector if it matches node in detach array
+            en.forEach(this, (i) => {
+                en.forEach(detachList, (x) => {
+                    if (detachList[x.index] === this[i.index]) {
+                        delete this[i.index];
                     }
                 });
+            });
 
-                // completely clear the main selector
-                this.length = en.clearSelector(this);
+            // get left over query nodes and push them into nodesList array
+            en.forEach(this, (i) => {
+                if (this[i.index] !== undefined) {
+                    nodeList.push(this[i.index]);
+                }
+            });
 
-                // reset the selector with new items
-                this.length = en.resetSelector(this, nodeList);
-            }
+            // completely clear the main selector
+            this.length = en.clearSelector(this);
+
+            // reset the selector with new items
+            this.length = en.resetSelector(this, nodeList);
+        }
 
         return this;
     }; // detach method end

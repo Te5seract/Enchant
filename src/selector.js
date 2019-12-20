@@ -91,6 +91,8 @@ export  const __EnchantQuerySelector__ = (function () {
                 var eFlag = e.replace(/{/g, "~{").split("~");
                 var el;
 
+                // console.log(e)
+
                 // confirm that a flag was used
                 if (eFlag[1]) {
                     var all = eFlag[1].match(/all/i),

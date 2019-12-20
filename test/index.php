@@ -13,7 +13,12 @@
 <body>
 
     <div class="container">
-        <div class="elem2-all-elem"></div>
+        <div class="elem2-all-elem">
+            <p>
+                <span>
+                </span>
+            </p>
+        </div>
         <div class="elem2-all-elem"></div>
         <div class="elem2-all-elem"></div>
         <div class="elem2-all-elem"></div>
@@ -32,8 +37,6 @@
         E(document.body).css("background-color: #333;");
 
         // E(".elem2-all-elem {all}").css("width: 100px; height: 100px; float: left; margin: 3px; background-color: red");
-
-        console.log(E(".elem2-all-elem {all}").attach(".elem {all}"));
 
         // var el = document.createElement("span");
 

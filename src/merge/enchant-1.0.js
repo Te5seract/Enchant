@@ -1142,6 +1142,82 @@ window.E = (function () {
         return this;
     }; // end append
 
+    /*////////////////////////////////////////
+        Parent method can get the parent node
+    */
+    proto.parent = function (intCount) {
+        if (!intCount) {
+            intCount = 1;
+        } else {
+            intCount = intCount + 1;
+        }
+
+        var prntNode = [],
+        startPoint = this[0].parentElement,
+        i = 0;
+
+        while (startPoint && i < intCount) {
+            if (i === intCount -1) {
+                prntNode.push(startPoint);
+
+                break;
+            }
+
+            startPoint = startPoint.parentElement;
+
+            i++;
+        }
+
+        this.length = en.clearSelector(this);
+
+        if (prntNode.length > 0) {
+            this.length = en.resetSelector(this, prntNode);
+
+            return this;
+        } else {
+            return null;
+        }
+
+    }; // end parent
+
+    /*////////////////////////////////////////
+        Child method can get the child node
+    */
+    proto.child = function (intCount) {
+        if (!intCount) {
+            intCount = 1;
+        } else {
+            intCount = intCount + 1;
+        }
+
+        var childNode = [],
+        startPoint = this[0].children[0],
+        i = 0;
+
+        while (startPoint && i < intCount) {
+            if (i === intCount -1) {
+                childNode.push(startPoint);
+
+                break;
+            }
+
+            startPoint = startPoint.children[0];
+
+            i++;
+        }
+
+        this.length = en.clearSelector(this);
+
+        if (childNode.length > 0) {
+            this.length = en.resetSelector(this, childNode);
+
+            return this;
+        } else {
+            return null;
+        }
+
+    }; // end child
+
     ////////////////////////////////////////
     // MISC HANDLER
     ////////////////////////////////////////

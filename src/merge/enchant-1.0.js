@@ -566,12 +566,12 @@ window.E = (function () {
     /*////////////////////////////////////////
         get index of selected node
     */
-    proto.nodeIndex = function (strType) {
-        if (strType.match(/class|\./i)) {
-            var reference = document.querySelectorAll("."+this[0].getAttribute("class"));
+    proto.nodeIndex = function (strVal) {
+        if (strVal.match(/\./i)) {
+            var reference = document.querySelectorAll(strVal[0] === "." ? strVal : "."+strVal);
         }
-        else if (strType.match(/id|#/i)) {
-            var reference = document.querySelectorAll("#"+this[0].getAttribute("id"));
+        else if (strVal.match(/#/i)) {
+            var reference = document.querySelectorAll(strVal[0] === "#" ? strVal : "#"+strVal);
         }
 
         for (let i = 0; i < reference.length; i++) {

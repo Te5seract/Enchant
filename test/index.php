@@ -20,24 +20,43 @@
         <div class="elem2-all-elem"></div>
     </div>
 
-    <div class="elem"></div>
-    <div class="elem"></div>
-    <div class="elem"></div>
-    <div class="elem"></div>
-    <div class="elem"></div>
+    <div class="elem testA testB something">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="elem">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="elem testA testB something">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="elem">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="elem">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
     
     <script type="module">
         import { E } from "./../src/enchant.js";
 
         E(document.body).css("background-color: #333;");
 
-        E(".container").prepend(E(".elem2-all-elem {1}")[0], E("#testB")[0]);
+        E(".elem {all}").css("width: 100px; height: 100px; background-color: red; margin: 3px; float: left;");
 
-        // E(".elem2-all-elem {all}").css("width: 100px; height: 100px; float: left; margin: 3px; background-color: red");
-
-        // var el = document.createElement("span");
-
-        // E(".container").prepend(E().create("span", 3), E(".elem2-all-elem {2}")[0]);
+        E(".testA {all}").events("click", (e, t) => {
+            console.log(E(t).nodeIndex(".testA"));
+        });
+            
         
         // E().ajax({
         //     method : "POST",

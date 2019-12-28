@@ -18,13 +18,13 @@ export const E = (function () {
     ////////////////////////////////////////
     // core library
     function Enchant (el, sel) {
+        this.selector = sel;
+        
         for (let i = 0; i < el.length; i++) {
             this[i] = el[i];
         }
 
         this.length = el.length;
-
-        // this.selector = sel ? sel.replace(/{.*?}| {.*?}/g, "") : "";
     };
 
     // force the library to return as an array

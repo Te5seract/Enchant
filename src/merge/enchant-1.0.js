@@ -1301,16 +1301,18 @@ window.E = (function () {
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var jsn = {};
-                for (let i = 0; i < JSON.parse(xhr.responseText).length; i++) {
-                    for (let x in JSON.parse(xhr.responseText)[i]) {
-                        jsn[x] = JSON.parse(xhr.responseText)[i][x];
+                if (xhr.responseText.length > 0) {
+                    for (let i = 0; i < JSON.parse(xhr.responseText).length; i++) {
+                        for (let x in JSON.parse(xhr.responseText)[i]) {
+                            jsn[x] = JSON.parse(xhr.responseText)[i][x];
+                        }
                     }
-                }
 
-                fn({
-                    responseTxt : xhr.responseText,
-                    json : jsn ? jsn : null
-                });
+                    fn({
+                        responseTxt : xhr.responseText,
+                        json : jsn
+                    });
+                }
             }
         };
 
@@ -1321,7 +1323,7 @@ window.E = (function () {
         }
 
         return this;
-    }; // end ajax      
+    }; // end ajax     
 
     ////////////////////////////////////////
     // setup

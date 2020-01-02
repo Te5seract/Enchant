@@ -35,32 +35,33 @@ export const __miscHandler__ = (function () {
             }
         }; // end for each
 
-        /*////////////////////////////////////////
-            AJAX
-        */
-        var ajxOps = {
-            method : "",
-            url : "",
-            data : ""
-        };
-        proto.ajax = function (ajxOps, fn, boolHeaders) {
-            const ops = ajxOps;
-            var xhr = new XMLHttpRequest();
+    /*////////////////////////////////////////
+        AJAX
+    */
+    var ajxOps = {
+        method : "",
+        url : "",
+        data : ""
+    };
+    proto.ajax = function (ajxOps, fn, boolHeaders) {
+        const ops = ajxOps;
+        var xhr = new XMLHttpRequest();
 
-            if (boolHeaders === undefined) {
-                boolHeaders = true;
-            }
+        if (boolHeaders === undefined) {
+            boolHeaders = true;
+        }
 
-            xhr.open(ops.method, ops.url);
+        xhr.open(ops.method, ops.url);
 
-            if (boolHeaders) {
-                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            }
+        if (boolHeaders) {
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        }
 
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    var jsn = {};
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var jsn = {};
+                if (xhr.responseText.length > 0) {
                     for (let i = 0; i < JSON.parse(xhr.responseText).length; i++) {
                         for (let x in JSON.parse(xhr.responseText)[i]) {
                             jsn[x] = JSON.parse(xhr.responseText)[i][x];
@@ -69,19 +70,20 @@ export const __miscHandler__ = (function () {
 
                     fn({
                         responseTxt : xhr.responseText,
-                        json : jsn ? jsn : null
+                        json : jsn
                     });
                 }
-            };
-
-            if (ops.method.match(/post/i)) {
-                xhr.send(ops.data);
-            } else {
-                xhr.send();
             }
+        };
 
-            return this;
-        }; // end ajax
+        if (ops.method.match(/post/i)) {
+            xhr.send(ops.data);
+        } else {
+            xhr.send();
+        }
+
+        return this;
+    }; // end ajax   
 
     }; // end of method list
 

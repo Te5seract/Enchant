@@ -21,40 +21,37 @@
     </div>
 
     <div class="elem testA testB something">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span>
+            <ul>
+                <li class="test1"><a class="test-point"></a></li>
+                <li class="test2"><a class="test-point"></a></li>
+                <li class="test3"><a class="test-point"></a></li>
+                <li class="test4"><a class="test-point"></a></li>
+            </ul>
+        </span>
     </div>
-    <div class="elem">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <div class="elem testA testB something">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <div class="elem">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <div class="elem">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
+    <div class="elem"></div>
+    <div class="elem"></div>
+    <div class="elem"></div>
+    <div class="elem"></div>
     
     <script type="module">
         import { E } from "./../src/enchant.js";
 
         E(document.body).css("background-color: #333;");
 
-        E(".elem {all}").css("width: 100px; height: 100px; background-color: red; margin: 3px; float: left;");
+        // E(".elem {all}").css("width: 100px; height: 100px; background-color: red; margin: 3px; float: left;");
 
-        E(".testA {all}").events("click", (e, t) => {
-            console.log(E(t).nodeIndex(".testA"));
+        // E(".elem").css("width: 100px; height: 100px; background-color: red; margin: 3px; float: left;");
+
+        // E(".elem").events("click", (e, t) => {
+        //     console.log(E(t).goTo("parent", "html"));
+        // });
+
+        E(".test1").css("width: 100px; height: 100px; background-color: red; margin: 3px; float: left;");
+
+        E(".test1").events("click", (e, t) => {
+            console.log(E(t).goTo("next", ".test4"));
         });
             
         

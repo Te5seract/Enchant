@@ -1086,6 +1086,238 @@ window.E = (function () {
         });
     }; // end editable
 
+    /*////////////////////////////////////////
+        Create method creates an element but doesn't append it
+    */
+    proto.create = function (strType, intCount, strAttr, strVal) {
+        if (!intCount) {
+            intCount = 1;
+        }
+
+        var created = [];
+        for (let i = 0; i < intCount; i++) {
+            var elem = document.createElement(strType);
+
+            if (strAttr) {
+                elem.setAttribute(strAttr, strVal);
+            }
+            
+            created.push(elem);
+        }
+
+        // clear main selector
+        this.length = en.clearSelector(this);
+
+        // reset main selector
+        this.length = en.resetSelector(this, created);
+
+        return this;
+    }; // end create
+
+    /*////////////////////////////////////////
+        Prepend method adds an element before another
+    */
+    proto.prepend = function (objNode, objRefNode) {
+        if (objNode.length && objRefNode.length) {
+            en.forEach(objRefNode, (i) => {
+                en.forEach(objNode, (x) => {
+                    this[0].insertBefore(objNode[x.index], objRefNode[i.index]);
+                });
+            });
+        }
+        else if (!objNode.length && objRefNode.length) {
+            en.forEach(objRefNode, (i) => {
+                this[0].insertBefore(objNode, objRefNode[i.index]);
+            });
+        }
+        else if (objNode.length && !objRefNode.length) {
+            en.forEach(objRefNode, (i) => {
+                this[0].insertBefore(objNode[i.index], objRefNode);
+            });
+        }
+        else if (!objNode.length && !objRefNode.length) {
+            this[0].insertBefore(objNode, objRefNode);
+        }
+
+        return this;
+    }; // end prepend
+
+    /*////////////////////////////////////////
+        Apend method appends elements to the selected node
+    */
+    proto.append = function (objNode) {
+        en.forEach(this, (i) => {
+            if (objNode.length) {
+                en.forEach(objNode, (x) => {
+                    this[i.index].appendChild(objNode[x.index]);
+                });
+            } 
+            else if (!objNode.length) {
+                this[i.index].appendChild(objNode);
+            }
+        });
+
+        return this;
+    }; // end append
+
+    /*////////////////////////////////////////
+        Parent method can get the parent node
+    */
+    proto.parent = function (intCount) {
+        if (!intCount) {
+            intCount = 1;
+        } else {
+            intCount = intCount + 1;
+        }
+
+        var prntNode = [],
+        startPoint = this[0].parentElement,
+        i = 0;
+
+        while (startPoint && i < intCount) {
+            if (i === intCount -1) {
+                prntNode.push(startPoint);
+
+                break;
+            }
+
+            startPoint = startPoint.parentElement;
+
+            i++;
+        }
+
+        this.length = en.clearSelector(this);
+
+        if (prntNode.length > 0) {
+            this.length = en.resetSelector(this, prntNode);
+
+            return this;
+        } else {
+            return null;
+        }
+
+    }; // end parent
+
+    /*////////////////////////////////////////
+        Child method can get the child node
+    */
+    proto.child = function (intCount) {
+        if (!intCount) {
+            intCount = 1;
+        } else {
+            intCount = intCount + 1;
+        }
+
+        var childNode = [],
+        startPoint = this[0].children[0],
+        i = 0;
+
+        while (startPoint && i < intCount) {
+            if (i === intCount -1) {
+                childNode.push(startPoint);
+
+                break;
+            }
+
+            startPoint = startPoint.children[0];
+
+            i++;
+        }
+
+        this.length = en.clearSelector(this);
+
+        if (childNode.length > 0) {
+            this.length = en.resetSelector(this, childNode);
+
+            return this;
+        } else {
+            return null;
+        }
+
+    }; // end child
+
+    /*////////////////////////////////////////
+        Go to method goes back through parent nodes to the one 
+        specified in the method
+    */
+    proto.goTo = function (strSearchBy, strId) {
+        var current = this[0],
+        node = [];
+
+        // search methods
+        if (strSearchBy.match(/parent|parents/i)) {
+            var method = "parentNode";
+        }
+        else if (strSearchBy.match(/next|nextNode|nextSibling/i)) {
+            var method = "nextElementSibling";
+        }
+        else if (strSearchBy.match(/prev|previousNode|previousSibling/)) {
+            var method = "previousElementSibling";
+        }
+
+        // look for only parents and siblings
+        while (current) {
+            if (strId.match(/#|\./i)) {
+                if (current.localName) {
+                    if (current.hasAttribute("class") && current.classList.contains(strId.replace(".", ""))) {
+                        node.push(current);
+
+                        break;
+                    }
+                    else if (current.hasAttribute("id") && current.getAttribute("id") === strId.replace("#", "")) {
+                        node.push(current);
+
+                        break;
+                    }
+                }
+            } else {
+                if (current.localName === strId) {
+                    node.push(current);
+
+                    break;
+                }
+            }
+
+            current = current[method];
+        } // end while loop
+
+        // go through child nodes (separete to the while loop)
+        if (strSearchBy.match(/child|children/i)) {
+            current = this[0].querySelectorAll("*");
+
+            for (let i = 0; i < current.length; i++) {
+                if (strId.match(/#|\./i)) {
+                    if (current[i].localName) {
+                        if (current[i].hasAttribute("class") && current[i].classList.contains(strId.replace(".", ""))) {
+                            node.push(current[i]);
+
+                            break;
+                        }
+                        else if (current[i].hasAttribute("id") && current[i].getAttribute("id") === strId.replace("#", "")) {
+                            node.push(current[i]);
+
+                            break;
+                        }
+                    }
+                } else {
+                    if (current[i].localName === strId) {
+                        node.push(current[i]);
+
+                        break;
+                    }
+                }
+            }
+        } // end looking through child elements
+        
+        // clear the selector
+        this.length = en.clearSelector(this);
+
+        // reset selector with new node list
+        this.length = en.resetSelector(this, node);
+
+        return this;
+    }; // end go to
+
     ////////////////////////////////////////
     // MISC HANDLER
     ////////////////////////////////////////

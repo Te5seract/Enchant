@@ -13,11 +13,11 @@
 <body>
 
     <div class="container">
-        <div class="elem2-all-elem"></div>
-        <div class="elem2-all-elem"></div>
-        <div class="elem2-all-elem" id="testA"></div>
-        <div class="elem2-all-elem" id="testB"></div>
-        <div class="elem2-all-elem"></div>
+        <div class="elem2"></div>
+        <div class="elem2"></div>
+        <div class="elem2"></div>
+        <div class="elem2"></div>
+        <div class="elem2"></div>
     </div>
 
     <div class="elem testA testB something">
@@ -40,6 +40,10 @@
 
         E(document.body).css("background-color: #333;");
 
+        E(".elem2 {all}").css("width: 100px; height: 100px; background-color: blue; margin: 3px; display: inline-block;");
+
+        E(".elem2 {all}").any(true).css("background-color: orange;", true);
+
         // E(".elem {all}").css("width: 100px; height: 100px; background-color: red; margin: 3px; float: left;");
 
         // E(".elem").css("width: 100px; height: 100px; background-color: red; margin: 3px; float: left;");
@@ -48,11 +52,13 @@
         //     console.log(E(t).goTo("parent", "html"));
         // });
 
-        E(".test1").css("width: 100px; height: 100px; background-color: red; margin: 3px; float: left;");
+        // E(".test1").css("width: 100px; height: 100px; background-color: red; margin: 3px; float: left;");
 
-        E(".test1").events("click", (e, t) => {
-            console.log(E(t).goTo("next", ".test4"));
-        });
+        // E(".elem2 {all}").append(E().create("span", 2));
+
+        // E(".test1").events("click", (e, t) => {
+        //     console.log(E(t).goTo("next", ".test4"));
+        // });
             
         
         // E().ajax({

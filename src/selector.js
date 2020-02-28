@@ -96,10 +96,10 @@ export  const __EnchantQuerySelector__ = (function () {
                 // confirm that a flag was used
                 if (eFlag[1]) {
                     var all = eFlag[1].match(/all/i),
-                    odd = eFlag[1].match(/odd/i),
-                    evn = eFlag[1].match(/even|evn/i),
-                    spec = eFlag[1].match(/&|{[0-9]+}|{last}/i),
-                    ratio = eFlag[1].match(/{[0-9] >> [0-9]}|{[0-9]>>[0-9]}|{[0-9 >> last]+}|{[0-9>>last]+}/i);
+                        odd = eFlag[1].match(/odd/i),
+                        evn = eFlag[1].match(/even|evn/i),
+                        spec = eFlag[1].match(/&|{[0-9]+}|{last}/i),
+                        ratio = eFlag[1].match(/{[0-9] >> [0-9]}|{[0-9]>>[0-9]}|{[0-9 >> last]+}|{[0-9>>last]+}/i);
                 }
 
                 if (all) {

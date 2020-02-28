@@ -58,6 +58,35 @@ export const __queryHandling__ = (function () {
         }; // swap method end
 
         /*////////////////////////////////////////
+            any method gets any random element(s) from an array of elements
+        */ 
+        proto.any = function (boolMulti) {
+            var rand = Math.floor(Math.random() * this.length) + 1,
+                nodeList = [];
+
+            if (!boolMulti) {
+                nodeList.push(this[rand - 1]);
+            } else {
+                if (rand === 0) {
+                    rand = 1;
+                }
+
+                for (let i = 0; i < rand; i++) {
+                    var nodeIndex = Math.floor(Math.random() * this.length - 1) + 1;
+                    nodeList.push(this[nodeIndex]);
+                }
+            }
+
+            // completely clear the selector
+            this.length = en.clearSelector(this);
+
+            // reset selector size
+            this.length = en.resetSelector(this, nodeList);
+
+            return this;
+        }; // any method end
+
+        /*////////////////////////////////////////
             attach method attaches more elements to the main 
             query
         */ 

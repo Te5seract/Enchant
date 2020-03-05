@@ -1413,9 +1413,9 @@ window.E = (function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var jsn = {};
                 if (xhr.responseText.length > 0) {
-                    for (let i = 0; i < JSON.parse(xhr.responseText).length; i++) {
-                        for (let x in JSON.parse(xhr.responseText)[i]) {
-                            jsn[x] = JSON.parse(xhr.responseText)[i][x];
+                    if (JSON.parse(xhr.responseText)) {
+                        for (let i in JSON.parse(xhr.responseText)) {
+                            jsn[i] = JSON.parse(xhr.responseText)[i]
                         }
                     }
 

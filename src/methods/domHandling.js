@@ -313,36 +313,40 @@ export const __DOMHandler__ = (function () {
                     var words = this[i.index].textContent.split(" "),
                     limitedContent = [];
 
-                    for (let i = 0; i < words.length; i++) {
-                        if (i === intCount) {
-                            break;
+                    if (words.length > intCount) {
+                        for (let i = 0; i < words.length; i++) {
+                            if (i === intCount) {
+                                break;
+                            }
+
+                            limitedContent.push(words[i]);
                         }
 
-                        limitedContent.push(words[i]);
-                    }
-
-                    if (strTrail) {
-                        this[i.index].textContent = limitedContent.toString().replace(/,/g, " ")+strTrail;
-                    } else {
-                        this[i.index].textContent = limitedContent.toString().replace(/,/g, " ");
+                        if (strTrail) {
+                            this[i.index].textContent = limitedContent.toString().replace(/,/g, " ")+strTrail;
+                        } else {
+                            this[i.index].textContent = limitedContent.toString().replace(/,/g, " ");
+                        }
                     }
                 }
                 else if (strBreak.match(/letter|lttr|ltr|char|character/i)) {
-                    var letters = this[i.index].textContent.split(""),
-                    limitedContent = [];
+                    if (this[i.index].textContent.length > intCount) {
+                        var letters = this[i.index].textContent.split(""),
+                        limitedContent = [];
 
-                    for (let i = 0; i < letters.length; i++) {
-                        if (i === intCount) {
-                            break;
+                        for (let i = 0; i < letters.length; i++) {
+                            if (i === intCount) {
+                                break;
+                            }
+
+                            limitedContent.push(letters[i]);
                         }
 
-                        limitedContent.push(letters[i]);
-                    }
-
-                    if (strTrail) {
-                        this[i.index].textContent = limitedContent.toString().replace(/,/g, "")+strTrail;
-                    } else {
-                        this[i.index].textContent = limitedContent.toString().replace(/,/g, "");
+                        if (strTrail) {
+                            this[i.index].textContent = limitedContent.toString().replace(/,/g, "")+strTrail;
+                        } else {
+                            this[i.index].textContent = limitedContent.toString().replace(/,/g, "");
+                        }
                     }
                 }
             });

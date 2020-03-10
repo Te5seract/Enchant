@@ -69,7 +69,7 @@ export const __miscHandler__ = (function () {
                     }
 
                     fn({
-                        responseTxt : xhr.responseText,
+                        responce : xhr.responseText,
                         json : jsn
                     });
                 }

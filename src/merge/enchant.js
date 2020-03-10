@@ -1424,7 +1424,7 @@ window.E = (function () {
                     }
 
                     fn({
-                        responseTxt : xhr.responseText,
+                        responce : xhr.responseText,
                         json : jsn
                     });
                 }

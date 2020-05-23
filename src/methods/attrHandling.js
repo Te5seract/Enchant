@@ -6,9 +6,35 @@ export const __attrHandler__ = (function () {
             Set attr method adds an attribute to the node(s)
         */
         proto.setAttr = function (strType, strVal) {
-            en.forEach(this, (i) => {
-                this[i.index].setAttribute(strType, strVal);
-            });
+            // set attribute with both params
+            if (strType && strVal) {
+                en.forEach(this, (i) => {
+                    this[i.index].setAttribute(strType, strVal);
+                });
+            }
+
+            // set attribute with single string
+            if (strType.match(/=/) && !strType.match(/ |,/g)) {
+                en.forEach(this, (i) => {
+                    var typeSegs = strType.split("=");
+
+                    this[i.index].setAttribute(typeSegs[0], typeSegs[1]);
+                });
+            }
+
+            // set multiple attributes with single string
+            if (strType.match(/=/) && strType.match(/ |,/g)) {
+                en.forEach(this, (i) => {
+                    strType = strType.replace(/ |,/g, "~");
+                    var atts = strType.split("~").filter(Boolean);
+
+                    en.forEach(atts, (x) => {
+                        var typeSegs = atts[x.index].split("=");
+
+                        this[i.index].setAttribute(typeSegs[0], typeSegs[1]);
+                    });
+                });
+            }
 
             return this;
         }; // end set attr
@@ -17,9 +43,24 @@ export const __attrHandler__ = (function () {
             Del attr method deletes an attribute
         */
         proto.delAttr = function (strType) {
-            en.forEach(this, (i) => {
-                this[i.index].removeAttribute(strType);
-            });
+            // remove single attribute
+            if (!strType.match(/ |,/g)) {
+                en.forEach(this, (i) => {
+                    this[i.index].removeAttribute(strType);
+                });
+            }
+            
+            // remove multiple attributes 
+            if (strType.match(/ |,/g)) {
+                strType = strType.replace(/ |,/g, "~");
+                var attr = strType.split("~");
+
+                en.forEach(this, (i) => {
+                    en.forEach(attr, (x) => {
+                        this[i.index].removeAttribute(attr[x.index]);
+                    });
+                });
+            }
 
             return this;
         }; // end del attr

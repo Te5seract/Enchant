@@ -91,8 +91,6 @@ export  const __EnchantQuerySelector__ = (function () {
                 var eFlag = e.replace(/{/g, "~{").split("~");
                 var el;
 
-                // console.log(e)
-
                 // confirm that a flag was used
                 if (eFlag[1]) {
                     var all = eFlag[1].match(/all/i),
@@ -128,6 +126,12 @@ export  const __EnchantQuerySelector__ = (function () {
                 return [e];
             }
             else if (typeof e === "object" && e.length >= 1) { // for arrays
+                return e;
+            }
+            else if (typeof e === "number" && !e.length) {
+                return [e];
+            }
+            else if (typeof e === "number" && e.length >= 1) {
                 return e;
             }
         },

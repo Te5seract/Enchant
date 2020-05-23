@@ -8,7 +8,7 @@
 
     <script type="module" src="../src/enchant.js"></script>
 
-    <!-- <script src="../src/merge/enchant-1.0.min.js"></script> -->
+    <script src="../src/merge/enchant-1.0.min.js"></script>
 </head>
 <body>
 
@@ -40,36 +40,14 @@
 
         E(document.body).css("background-color: #333;");
 
-        E(".elem2 {all}").css("width: 100px; height: 100px; background-color: blue; margin: 3px; display: inline-block;");
+        E(document).events("keydown", (e, t) => {
+            console.log(E(e.keyCode).is(32, 17, 18));
+        });
 
-        E(".elem2 {all}").any(true).css("background-color: orange;", true);
+        // E(".elem {all}").setAttr("title=box, value=test, alt=alternate");
 
-        // E(".elem {all}").css("width: 100px; height: 100px; background-color: red; margin: 3px; float: left;");
-
-        // E(".elem").css("width: 100px; height: 100px; background-color: red; margin: 3px; float: left;");
-
-        // E(".elem").events("click", (e, t) => {
-        //     console.log(E(t).goTo("parent", "html"));
-        // });
-
-        // E(".test1").css("width: 100px; height: 100px; background-color: red; margin: 3px; float: left;");
-
-        // E(".elem2 {all}").append(E().create("span", 2));
-
-        // E(".test1").events("click", (e, t) => {
-        //     console.log(E(t).goTo("next", ".test4"));
-        // });
+        // E(".elem {0 >> 2}").delAttr("value, alt");
             
-        
-        // E().ajax({
-        //     method : "POST",
-        //     url : "test.php",
-        //     data : "name=test&name2=anothertest&name3=lasttest"
-        // }, (x) => {
-        //     E(x.json).forEach((i) => {
-        //         console.log(i.node);
-        //     });
-        // });
     </script>
 </body>
 </html>

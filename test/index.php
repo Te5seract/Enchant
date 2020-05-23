@@ -8,7 +8,7 @@
 
     <script type="module" src="../src/enchant.js"></script>
 
-    <script src="../src/merge/enchant-1.0.min.js"></script>
+    <!-- <script src="../src/merge/enchant-1.0.min.js"></script> -->
 </head>
 <body>
 

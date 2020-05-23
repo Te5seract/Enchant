@@ -133,6 +133,12 @@ window.__E__ = (function () {
             else if (typeof e === "object" && e.length >= 1) { // for arrays
                 return e;
             }
+            else if (typeof e === "number" && !e.length) {
+                return [e];
+            }
+            else if (typeof e === "number" && e.length >= 1) {
+                return e;
+            }
         },
         ////////////////////////////////////////
         // loops through arrays

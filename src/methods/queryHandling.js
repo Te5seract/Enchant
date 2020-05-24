@@ -348,6 +348,62 @@ export const __queryHandling__ = (function () {
             return this;
         }; // within method end
 
+        /*////////////////////////////////////////
+            search finds certain keywords in the scope of the element
+            that is selected
+        */
+        proto.search = function (strSearch, ...strExcludeTag) {
+            var reg = new RegExp(strSearch, "g"),
+                found = [];
+
+            en.forEach(this, (i) => {
+                var within = this[i.index].querySelectorAll("*");
+
+                // find items that contain the search keyword
+                en.forEach(within, (x) => {
+                    if (within[x.index].textContent.match(reg)) {
+                        found.push(within[x.index]);
+                    }
+
+                    // find items via attributes
+                    var className = within[x.index].attributes.class ? within[x.index].attributes.class.nodeValue : "",
+                        id = within[x.index].attributes.id ? within[x.index].attributes.id.nodeValue : "",
+                        tag = within[x.index].localName,
+                        attrs = within[x.index].attributes;
+
+                    // find attributes that have a certain keyword
+                    for (let j = 0; j < attrs.length; j++) {
+                        if (attrs[j].name !== "class" && attrs[j].name.match(reg) || attrs[j].name !== "class" && attrs[j].nodeValue.match(reg)) {
+                            found.push(within[x.index]);
+                        }
+                    }
+
+                    if (className.match(reg) || id.match(reg) || tag.match(reg)) {
+                        found.push(within[x.index]);
+                    }
+                });
+            }); // end find items that contain search keyword
+
+            // exclude certain tags
+            if (strExcludeTag) {
+                en.forEach(found, (i) => {
+                    en.forEach(strExcludeTag, (x) => {
+                        if (found[i.index].localName === strExcludeTag[x.index]) {
+                            found[i.index] = "";
+                        }
+                    });
+                });
+            } // end tag exclusion
+
+            found = found.filter(Boolean);
+            
+            this.length = en.clearSelector(this);
+
+            this.length = en.resetSelector(this, found);
+
+            return this;
+        }; // search method end
+
     }; // end of method list
 
     return {

@@ -116,8 +116,12 @@ export  const __EnchantQuerySelector__ = (function () {
                     el = get_ratio(e);
                 }
                 else if (!all || !evn || !odd || !spec || !ratio) {
-                    var el = [];
-                    el.push(document.querySelector(e));
+                    if (document.querySelector(e)) {
+                        var el = [];
+                        el.push(document.querySelector(e));
+                    } else {
+                        var el = [e];
+                    }
                 }
 
                 return el;

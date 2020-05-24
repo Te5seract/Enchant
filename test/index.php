@@ -8,14 +8,14 @@
 
     <script type="module" src="../src/enchant.js"></script>
 
-    <!-- <script src="../src/merge/enchant-1.0.min.js"></script> -->
+    <!-- <script src="../src/merge/enchant.min.js"></script> -->
 </head>
 <body>
 
     <div class="container">
         <div class="elem2"></div>
         <div class="elem2"></div>
-        <div class="elem2"></div>
+        <div class="elem2" stamp="title"></div>
         <div class="elem2"></div>
         <div class="elem2"></div>
     </div>
@@ -28,21 +28,29 @@
                 <li class="test3"><a class="test-point"></a></li>
                 <li class="test4"><a class="test-point"></a></li>
             </ul>
+            <div>
+                <span class="target"></span>
+            </div>
         </span>
     </div>
-    <div class="elem"></div>
-    <div class="elem"></div>
-    <div class="elem"></div>
-    <div class="elem"></div>
+    <div class="elem">wh65yrt</div>
+    <div class="elem">rjuy</div>
+    <div class="elem">shrt</div>
+    <div class="elem">sthrbg</div>
     
     <script type="module">
         import { E } from "./../src/enchant.js";
 
         E(document.body).css("background-color: #333;");
 
-        E(document).events("keydown", (e, t) => {
-            console.log(E(e.keyCode).is(32, 17, 18));
-        });
+        // console.log(E(document.body).search("shrt", "script", "span"));
+
+
+        // E(document.body).search("te").css("width: 100px; height: 100px; background-color: red;");
+
+        // E(document).events("keydown", (e, t) => {
+        //     console.log(E(e.keyCode).is(32, 17, 18));
+        // });
 
         // E(".elem {all}").setAttr("title=box, value=test, alt=alternate");
 

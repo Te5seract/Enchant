@@ -43,13 +43,15 @@
 
         E(document.body).css("background-color: #333;");
 
-        // console.log(E(document.body).search("shrt", "script", "span"));
+        // console.log(E(".elem").search("2"));
+
+        console.log(E("."));
 
 
         // E(document.body).search("te").css("width: 100px; height: 100px; background-color: red;");
 
-        // E(document).events("keydown", (e, t) => {
-        //     console.log(E(e.keyCode).is(32, 17, 18));
+        // E(document).events("keydown, click, mousemove", (e, t) => {
+        //     console.log(E(e.type).is("click", "keydown"));
         // });
 
         // E(".elem {all}").setAttr("title=box, value=test, alt=alternate");

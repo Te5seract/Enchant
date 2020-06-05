@@ -88,7 +88,6 @@ window.__E__ = (function () {
 
         return elems;
     };
-
     return {
         selector : function (e) {
             if (typeof e === "string") {
@@ -99,10 +98,10 @@ window.__E__ = (function () {
                 // confirm that a flag was used
                 if (eFlag[1]) {
                     var all = eFlag[1].match(/all/i),
-                    odd = eFlag[1].match(/odd/i),
-                    evn = eFlag[1].match(/even|evn/i),
-                    spec = eFlag[1].match(/&|{[0-9]+}|{last}/i),
-                    ratio = eFlag[1].match(/{[0-9] >> [0-9]}|{[0-9]>>[0-9]}|{[0-9 >> last]+}|{[0-9>>last]+}/i);
+                        odd = eFlag[1].match(/odd/i),
+                        evn = eFlag[1].match(/even|evn/i),
+                        spec = eFlag[1].match(/&|{[0-9]+}|{last}/i),
+                        ratio = eFlag[1].match(/{[0-9] >> [0-9]}|{[0-9]>>[0-9]}|{[0-9 >> last]+}|{[0-9>>last]+}/i);
                 }
 
                 if (all) {
@@ -121,8 +120,12 @@ window.__E__ = (function () {
                     el = get_ratio(e);
                 }
                 else if (!all || !evn || !odd || !spec || !ratio) {
-                    var el = [];
-                    el.push(document.querySelector(e));
+                    try {
+                        var el = [];
+                        el.push(document.querySelector(e));
+                    } catch (er) {
+                        var el = [e];
+                    }
                 }
 
                 return el;

@@ -45,7 +45,7 @@
 
         // console.log(E(".elem").search("2"));
 
-        console.log(E("."));
+        console.log(E("jpg"));
 
 
         // E(document.body).search("te").css("width: 100px; height: 100px; background-color: red;");

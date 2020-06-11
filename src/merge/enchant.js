@@ -123,6 +123,10 @@ window.__E__ = (function () {
                     try {
                         var el = [];
                         el.push(document.querySelector(e));
+
+                        if (!document.querySelector(e)) {
+                            var el = [e];
+                        }
                     } catch (er) {
                         var el = [e];
                     }
@@ -171,7 +175,7 @@ window.__E__ = (function () {
 
             return el.length;
         },
-    };
+    }
 })();
 
 // core

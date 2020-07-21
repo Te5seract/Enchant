@@ -123,10 +123,6 @@ window.__E__ = (function () {
                     try {
                         var el = [];
                         el.push(document.querySelector(e));
-
-                        if (!document.querySelector(e)) {
-                            var el = [e];
-                        }
                     } catch (er) {
                         var el = [e];
                     }
@@ -175,7 +171,7 @@ window.__E__ = (function () {
 
             return el.length;
         },
-    }
+    };
 })();
 
 // core
@@ -210,7 +206,7 @@ window.E = (function () {
     // QUERY HANDLER
     ////////////////////////////////////////
 
-     /*////////////////////////////////////////
+    /*////////////////////////////////////////
         swap method swaps main query for the one defined 
         in the swap method.
     */ 
@@ -359,7 +355,6 @@ window.E = (function () {
 
         return this;
     }; // attach method end
-
     
     /*////////////////////////////////////////
         detach items from main selector
@@ -369,6 +364,7 @@ window.E = (function () {
         nodeList = [];
 
         if (typeof mixRemove === "string") {
+            mixRemove = mixRemove.replace(/ /g, "");
             mixRemove = mixRemove.replace(/{| {/g, "~{").replace(/ |,/g, " ").split(" ").filter(Boolean);
             
             // cleanup and push nodes to detach into detachList array
@@ -378,10 +374,11 @@ window.E = (function () {
 
                 // push individual nodes out from the selector into the detachList array
                 en.forEach(en.selector(mixRemove[i.index]), (x) => {
+                    console.log(en.selector(mixRemove[i.index]));
                     detachList.push(en.selector(mixRemove[i.index])[x.index]);
                 });  
             });
-
+            
             // remove nodes in main selector that match the ones in detach list
             en.forEach(this, (i) => {
                 en.forEach(detachList, (x) => {
@@ -542,7 +539,7 @@ window.E = (function () {
             // return [e];
             elems.push(mixElem);
         }
-        else if (typeof mixElem === "object" && mixElem.length >= 1) { // for arrays
+        else if (typeof mixElem === "object" && mixElem.length > 1) { // for arrays
             for (let i = 0; i < mixElem.length; i++) {
                 elems.push(mixElem[i]);
             }

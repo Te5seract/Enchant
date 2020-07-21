@@ -19,7 +19,7 @@
         <div class="elem2"></div>
         <div class="elem2"></div>
     </div>
-
+<!-- 
     <div class="elem testA testB something">
         <span>
             <ul>
@@ -36,16 +36,20 @@
     <div class="elem">wh65yrt</div>
     <div class="elem">rjuy</div>
     <div class="elem">shrt</div>
-    <div class="elem">sthrbg</div>
+    <div class="elem">sthrbg</div> -->
     
     <script type="module">
         import { E } from "./../src/enchant.js";
 
         E(document.body).css("background-color: #333;");
 
-        // console.log(E(".elem").search("2"));
+        E(".elem2 {all}").css("width: 100px; height: 100px; background-color: red; float: left; margin: 3px;");
 
-        console.log(E("jpg"));
+        E(".elem2 {all}").detach(".elem2 {1 >> 3}").css("background-color: blue;", true);
+
+        // console.log(E(".elem2 {all}").detach(".elem2 {1>>3}"))
+
+        // console.log(E(".elem").search("2"));
 
 
         // E(document.body).search("te").css("width: 100px; height: 100px; background-color: red;");

@@ -160,6 +160,7 @@ export const __queryHandling__ = (function () {
             nodeList = [];
 
             if (typeof mixRemove === "string") {
+                mixRemove = mixRemove.replace(/ /g, "");
                 mixRemove = mixRemove.replace(/{| {/g, "~{").replace(/ |,/g, " ").split(" ").filter(Boolean);
                 
                 // cleanup and push nodes to detach into detachList array
@@ -169,10 +170,11 @@ export const __queryHandling__ = (function () {
 
                     // push individual nodes out from the selector into the detachList array
                     en.forEach(en.selector(mixRemove[i.index]), (x) => {
+                        console.log(en.selector(mixRemove[i.index]));
                         detachList.push(en.selector(mixRemove[i.index])[x.index]);
                     });  
                 });
-
+                
                 // remove nodes in main selector that match the ones in detach list
                 en.forEach(this, (i) => {
                     en.forEach(detachList, (x) => {

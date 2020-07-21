@@ -299,7 +299,7 @@ window.E = (function () {
 
         if (typeof mixElem === "string") {
             // discern query flags and separate string into array
-            mixElem = mixRemove.replace(/ /g, "");
+            mixElem = mixElem.replace(/ /g, "");
             mixElem = mixElem.replace(/ {|{/g, "~{").replace(/ |,/g, " ").split(" ").filter(Boolean);
 
             // push main selector into nodeList

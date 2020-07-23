@@ -255,17 +255,18 @@ export const __queryHandling__ = (function () {
         proto.within = function (mixElem) {
             var elems = [];
 
+            // this is just a modification of the script used for the main selector
+            var all = mixElem.match(/all/i),
+                odd = mixElem.match(/odd/i),
+                evn = mixElem.match(/even|evn/i),
+                spec = mixElem.match(/&|{[0-9]+}|{last}/i),
+                ratio = mixElem.match(/{[0-9] >> [0-9]}|{[0-9]>>[0-9]}|{[0-9 >> last]+}|{[0-9>>last]+}/i);
+
             if (typeof mixElem === "string") {
                 for (let i = 0; i < this.length; i++) {
-                    // this is just a modification of the script used for the main selector
-                    var all = mixElem.match(/all/i),
-                    odd = mixElem.match(/odd/i),
-                    evn = mixElem.match(/even|evn/i),
-                    spec = mixElem.match(/&|{[0-9]+}|{last}/i),
-                    ratio = mixElem.match(/{[0-9] >> [0-9]}|{[0-9]>>[0-9]}|{[0-9 >> last]+}|{[0-9>>last]+}/i);
-
                     if (all) { // if flags are used
-                        var mixElem = mixElem.split(" ")[0],
+                        var mixElem = mixElem.replace(/ {/, "~{").split("~")[0];
+
                         elems = this[i].querySelectorAll(mixElem);
                     }
                     else if (evn) {
@@ -328,7 +329,9 @@ export const __queryHandling__ = (function () {
                     }
                     else if (!all || !evn || !odd || !spec || !ratio) {
                         // var elems = [];
-                        elems.push(this[i].querySelector(mixElem));
+                        if (this[i].querySelector(mixElem)) {
+                            elems.push(this[i].querySelector(mixElem));
+                        }
                     }
                 }
             }

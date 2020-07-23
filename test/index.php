@@ -37,15 +37,41 @@
     <div class="elem">rjuy</div>
     <div class="elem">shrt</div>
     <div class="elem">sthrbg</div> -->
+
+    <div class="test-text">
+    example text one
+    </div><br>
+
+    <div class="test-text">
+    EXAMPLE TEXT TWO 
+    </div><br>
+
+    <div class="test-text">
+    example text three
+    </div><br>
+
+    <div class="test-text">
+        other example text four
+    </div>
     
     <script type="module">
         import { E } from "./../src/enchant.js";
 
         E(document.body).css("background-color: #333;");
 
-        E(".elem2 {all}").css("width: 100px; height: 100px; background-color: red; float: left; margin: 3px;");
+        E(".test-text").changeCase("upper");
 
-        E(".elem2 {all}").detach(".elem2 {1 >> 3}").css("background-color: blue;", true);
+        E(".test-text {1}").changeCase("lower");
+
+        E(".test-text {2}").changeCase("title");
+
+        E(".test-text {last}").changeCase("sentence");
+
+
+        E(".elem {all}").css("width: 100px; height: 100px; background-color: red; float: left; margin: 3px;");
+        
+        // E(".elem2 {all}").within(".target {all}").css("color: blue;", true);
+        E(".elem2 {1}").within(".target {all}").css("color: blue;", true);
 
         // console.log(E(".elem2 {all}").detach(".elem2 {1>>3}"))
 

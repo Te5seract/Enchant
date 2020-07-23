@@ -270,33 +270,41 @@ export const __DOMHandler__ = (function () {
         */
         proto.changeCase = function (strType) {
             en.forEach(this, (i) => {
+                this[i.index].innerHTML = this[i.index].innerHTML.replace(/\n/g, "").replace(/</g, " <");
+
+                var words = this[i.index].innerHTML.split(" ").filter(Boolean);
+
                 if (strType.match(/upper|uppercase|upper case|to upper|toupper/i)) {
-                    this[i.index].textContent = this[i.index].textContent.toUpperCase();
+                    this[i.index].innerHTML = this[i.index].innerHTML.toUpperCase();
                 }
                 else if (strType.match(/lower|lowercase|lower case|to lower|tolower/i)) {
-                    this[i.index].textContent = this[i.index].textContent.toLowerCase();
+                    this[i.index].innerHTML = this[i.index].innerHTML.toLowerCase();
                 }
                 else if (strType.match(/title|heading|camel/i)) {
-                    var words = this[i.index].textContent.split(" ");
-
                     for (let i = 0; i < words.length; i++) {
-                        var firstLetter = words[i].slice(0, 1).toUpperCase(),
-                        wordBody = words[i].slice(1, words[i].length);
+                        if (!words[i].match(/<.*>/g)) {
+                            var firstLetter = words[i].slice(0, 1).toUpperCase(),
+                            wordBody = words[i].slice(1, words[i].length);
 
-                        words[i] = firstLetter+wordBody;
+                            words[i] = firstLetter+wordBody;
+                        }
                     }
 
-                    this[i.index].textContent = words.toString().replace(/,/g, " ");
+                    this[i.index].innerHTML = words.toString().replace(/,/g, " ");
                 }
                 else if (strType.match(/sentence/i)) {
-                    var words = this[i.index].textContent.split(" ");
+                    for (let i = 0; i < words.length; i++) {
+                        if (!words[i].match(/<.*>/g)) {
+                            var firstLetter = words[i][0].slice(0, 1).toUpperCase();
+                            var lastLetters = words[i].slice(1, words[i].length);
 
-                    var firstLetter = words[0].slice(0, 1).toUpperCase(),
-                    wordBody = words[0].slice(1, words[0].length);
+                            words[i] = firstLetter+lastLetters;
 
-                    words[0] = firstLetter+wordBody;
+                            break;
+                        }
+                    }
 
-                    this[i.index].textContent = words.toString().replace(/,/g, " ");
+                    this[i.index].innerHTML = words.join(" ");
                 }
             });
 

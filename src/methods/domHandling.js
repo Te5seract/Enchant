@@ -317,6 +317,8 @@ export const __DOMHandler__ = (function () {
         */
         proto.limit = function (strBreak, intCount, strTrail) {
             en.forEach(this, (i) => {
+                this[i.index].textContent = this[i.index].textContent.replace(/\n| {2,}/g, "");
+                
                 if (strBreak.match(/word|words|wrd/i)) {
                     var words = this[i.index].textContent.split(" "),
                     limitedContent = [];
@@ -339,7 +341,7 @@ export const __DOMHandler__ = (function () {
                 }
                 else if (strBreak.match(/letter|lttr|ltr|char|character/i)) {
                     if (this[i.index].textContent.length > intCount) {
-                        var letters = this[i.index].textContent.split(""),
+                        var letters = this[i.index].textContent.split("").filter(Boolean),
                         limitedContent = [];
 
                         for (let i = 0; i < letters.length; i++) {

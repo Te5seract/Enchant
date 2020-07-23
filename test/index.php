@@ -40,18 +40,6 @@
 
     <div class="test-text">
     example text one
-    </div><br>
-
-    <div class="test-text">
-    EXAMPLE TEXT TWO 
-    </div><br>
-
-    <div class="test-text">
-    example text three
-    </div><br>
-
-    <div class="test-text">
-        other example text four
     </div>
     
     <script type="module">
@@ -59,13 +47,7 @@
 
         E(document.body).css("background-color: #333;");
 
-        E(".test-text").changeCase("upper");
-
-        E(".test-text {1}").changeCase("lower");
-
-        E(".test-text {2}").changeCase("title");
-
-        E(".test-text {last}").changeCase("sentence");
+        E(".test-text").limit("word", 1, "...");
 
 
         E(".elem {all}").css("width: 100px; height: 100px; background-color: red; float: left; margin: 3px;");

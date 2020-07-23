@@ -1147,6 +1147,8 @@ window.E = (function () {
     */
     proto.limit = function (strBreak, intCount, strTrail) {
         en.forEach(this, (i) => {
+            this[i.index].textContent = this[i.index].textContent.replace(/\n| {2,}/g, "");
+            
             if (strBreak.match(/word|words|wrd/i)) {
                 var words = this[i.index].textContent.split(" "),
                 limitedContent = [];

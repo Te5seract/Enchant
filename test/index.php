@@ -47,28 +47,7 @@
 
         E(document.body).css("background-color: #333;");
 
-        E(".test-text").limit("word", 1, "...");
-
-
-        E(".elem {all}").css("width: 100px; height: 100px; background-color: red; float: left; margin: 3px;");
-        
-        // E(".elem2 {all}").within(".target {all}").css("color: blue;", true);
-        E(".elem2 {1}").within(".target {all}").css("color: blue;", true);
-
-        // console.log(E(".elem2 {all}").detach(".elem2 {1>>3}"))
-
-        // console.log(E(".elem").search("2"));
-
-
-        // E(document.body).search("te").css("width: 100px; height: 100px; background-color: red;");
-
-        // E(document).events("keydown, click, mousemove", (e, t) => {
-        //     console.log(E(e.type).is("click", "keydown"));
-        // });
-
-        // E(".elem {all}").setAttr("title=box, value=test, alt=alternate");
-
-        // E(".elem {0 >> 2}").delAttr("value, alt");
+        console.log(E(".elem2").CSSVal("height"))
             
     </script>
 </body>

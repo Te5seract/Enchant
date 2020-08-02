@@ -611,6 +611,88 @@ window.E = (function () {
         return this;
     }; // search method end
 
+    /*////////////////////////////////////////
+        Go to method goes back through parent nodes to the one 
+        specified in the method
+    */
+    proto.goTo = function (strSearchBy, strId) {
+        var current = this[0],
+        node = [];
+
+        // search methods
+        if (strSearchBy.match(/parent|parents/i)) {
+            var method = "parentNode";
+        }
+        else if (strSearchBy.match(/next|nextNode|nextSibling/i)) {
+            var method = "nextElementSibling";
+        }
+        else if (strSearchBy.match(/prev|previousNode|previousSibling/)) {
+            var method = "previousElementSibling";
+        }
+
+        // look for only parents and siblings
+        while (current) {
+            if (strId.match(/#|\./i)) {
+                if (current.localName) {
+                    if (current.hasAttribute("class") && current.classList.contains(strId.replace(".", ""))) {
+                        node.push(current);
+
+                        break;
+                    }
+                    else if (current.hasAttribute("id") && current.getAttribute("id") === strId.replace("#", "")) {
+                        node.push(current);
+
+                        break;
+                    }
+                }
+            } else {
+                if (current.localName === strId) {
+                    node.push(current);
+
+                    break;
+                }
+            }
+
+            current = current[method];
+        } // end while loop
+
+        // go through child nodes (separete to the while loop)
+        if (strSearchBy.match(/child|children/i)) {
+            current = this[0].querySelectorAll("*");
+
+            for (let i = 0; i < current.length; i++) {
+                if (strId.match(/#|\./i)) {
+                    if (current[i].localName) {
+                        if (current[i].hasAttribute("class") && current[i].classList.contains(strId.replace(".", ""))) {
+                            node.push(current[i]);
+
+                            break;
+                        }
+                        else if (current[i].hasAttribute("id") && current[i].getAttribute("id") === strId.replace("#", "")) {
+                            node.push(current[i]);
+
+                            break;
+                        }
+                    }
+                } else {
+                    if (current[i].localName === strId) {
+                        node.push(current[i]);
+
+                        break;
+                    }
+                }
+            }
+        } // end looking through child elements
+        
+        // clear the selector
+        this.length = en.clearSelector(this);
+
+        // reset selector with new node list
+        this.length = en.resetSelector(this, node);
+
+        return this;
+    }; // end go to
+
     ////////////////////////////////////////
     // EVENT HANDLING
     ////////////////////////////////////////
@@ -682,9 +764,9 @@ window.E = (function () {
     ////////////////////////////////////////
 
     /*////////////////////////////////////////
-            CSS method adds CSS to the selected node(s)
-        */
-       proto.css = function (strCSS, boolApnd) {
+        CSS method adds CSS to the selected node(s)
+    */
+    proto.css = function (strCSS, boolApnd) {
         en.forEach(this, (i) => {
             if (!boolApnd) {
                 this[i.index].style.cssText = strCSS;
@@ -716,11 +798,12 @@ window.E = (function () {
         }
 
         if (!strVal) {
-            return this[0].style[strProp];
+            return this[0].style[strProp] ? this[0].style[strProp] : false;
         } else {
-            return this[0].style[strProp] === strVal;
+            return this[0].style[strProp] === strVal && this[0].style[strProp] ? true : false;
         }
     }; // end CSS val
+    
 
     
     ////////////////////////////////////////
@@ -1148,7 +1231,7 @@ window.E = (function () {
     proto.limit = function (strBreak, intCount, strTrail) {
         en.forEach(this, (i) => {
             this[i.index].textContent = this[i.index].textContent.replace(/\n| {2,}/g, "");
-            
+
             if (strBreak.match(/word|words|wrd/i)) {
                 var words = this[i.index].textContent.split(" "),
                 limitedContent = [];
@@ -1386,88 +1469,6 @@ window.E = (function () {
         }
 
     }; // end child
-
-    /*////////////////////////////////////////
-        Go to method goes back through parent nodes to the one 
-        specified in the method
-    */
-    proto.goTo = function (strSearchBy, strId) {
-        var current = this[0],
-        node = [];
-
-        // search methods
-        if (strSearchBy.match(/parent|parents/i)) {
-            var method = "parentNode";
-        }
-        else if (strSearchBy.match(/next|nextNode|nextSibling/i)) {
-            var method = "nextElementSibling";
-        }
-        else if (strSearchBy.match(/prev|previousNode|previousSibling/)) {
-            var method = "previousElementSibling";
-        }
-
-        // look for only parents and siblings
-        while (current) {
-            if (strId.match(/#|\./i)) {
-                if (current.localName) {
-                    if (current.hasAttribute("class") && current.classList.contains(strId.replace(".", ""))) {
-                        node.push(current);
-
-                        break;
-                    }
-                    else if (current.hasAttribute("id") && current.getAttribute("id") === strId.replace("#", "")) {
-                        node.push(current);
-
-                        break;
-                    }
-                }
-            } else {
-                if (current.localName === strId) {
-                    node.push(current);
-
-                    break;
-                }
-            }
-
-            current = current[method];
-        } // end while loop
-
-        // go through child nodes (separete to the while loop)
-        if (strSearchBy.match(/child|children/i)) {
-            current = this[0].querySelectorAll("*");
-
-            for (let i = 0; i < current.length; i++) {
-                if (strId.match(/#|\./i)) {
-                    if (current[i].localName) {
-                        if (current[i].hasAttribute("class") && current[i].classList.contains(strId.replace(".", ""))) {
-                            node.push(current[i]);
-
-                            break;
-                        }
-                        else if (current[i].hasAttribute("id") && current[i].getAttribute("id") === strId.replace("#", "")) {
-                            node.push(current[i]);
-
-                            break;
-                        }
-                    }
-                } else {
-                    if (current[i].localName === strId) {
-                        node.push(current[i]);
-
-                        break;
-                    }
-                }
-            }
-        } // end looking through child elements
-        
-        // clear the selector
-        this.length = en.clearSelector(this);
-
-        // reset selector with new node list
-        this.length = en.resetSelector(this, node);
-
-        return this;
-    }; // end go to
 
     ////////////////////////////////////////
     // MISC HANDLER

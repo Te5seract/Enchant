@@ -35,9 +35,9 @@ export const __CSSHandler__ = (function () {
             }
 
             if (!strVal) {
-                return this[0].style[strProp];
+                return this[0].style[strProp] ? this[0].style[strProp] : false;
             } else {
-                return this[0].style[strProp] === strVal;
+                return this[0].style[strProp] === strVal && this[0].style[strProp] ? true : false;
             }
         }; // end CSS val
         

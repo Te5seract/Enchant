@@ -6,6 +6,8 @@ export const __attrHandler__ = (function () {
             Set attr method adds an attribute to the node(s)
         */
         proto.setAttr = function (strType, strVal) {
+            strType = strType.replace(/, | ,/g, ",");
+
             // set attribute with both params
             if (strType && strVal) {
                 en.forEach(this, (i) => {
@@ -14,7 +16,7 @@ export const __attrHandler__ = (function () {
             }
 
             // set attribute with single string
-            if (strType.match(/=/) && !strType.match(/ |,/g)) {
+            if (strType.match(/=/) && !strType.match(/,/g)) {
                 en.forEach(this, (i) => {
                     var typeSegs = strType.split("=");
 
@@ -23,9 +25,9 @@ export const __attrHandler__ = (function () {
             }
 
             // set multiple attributes with single string
-            if (strType.match(/=/) && strType.match(/ |,/g)) {
+            if (strType.match(/=/) && strType.match(/,/g)) {
                 en.forEach(this, (i) => {
-                    strType = strType.replace(/ |,/g, "~");
+                    strType = strType.replace(/,/g, "~");
                     var atts = strType.split("~").filter(Boolean);
 
                     en.forEach(atts, (x) => {

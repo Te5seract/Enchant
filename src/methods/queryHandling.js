@@ -136,7 +136,7 @@ export const __queryHandling__ = (function () {
                     // detect multi-dimensional arrays
                     en.forEach(mixElem, (i) => {
                         // push multi-dimensional array items to nodeList
-                        if (mixElem[i.index].length) {
+                        if (mixElem[i.index] && mixElem[i.index].length) {
                             en.forEach(mixElem[i.index], (x) => {
                                 nodeList.push(mixElem[i.index][x.index]);
                             });

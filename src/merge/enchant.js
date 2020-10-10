@@ -340,7 +340,7 @@ window.E = (function () {
                 // detect multi-dimensional arrays
                 en.forEach(mixElem, (i) => {
                     // push multi-dimensional array items to nodeList
-                    if (mixElem[i.index].length) {
+                    if (mixElem[i.index] && mixElem[i.index].length) {
                         en.forEach(mixElem[i.index], (x) => {
                             nodeList.push(mixElem[i.index][x.index]);
                         });
@@ -469,11 +469,11 @@ window.E = (function () {
                 ratio = mixElem.match(/{[0-9] >> [0-9]}|{[0-9]>>[0-9]}|{[0-9 >> last]+}|{[0-9>>last]+}/i);
 
                 if (all) { // if flags are used
-                    var mixElem = mixElem.split(" ")[0],
+                    var mixElem = mixElem.split("{")[0],
                     elems = this[i].querySelectorAll(mixElem);
                 }
                 else if (evn) {
-                    var mixElem = mixElem.split(" ")[0],
+                    var mixElem = mixElem.split("{")[0],
                     even = this[i].querySelectorAll(mixElem);
         
                     // var elems = [];
@@ -484,7 +484,7 @@ window.E = (function () {
                     }
                 } 
                 else if (odd) {
-                    var mixElem = mixElem.split(" ")[0]
+                    var mixElem = mixElem.split("{")[0]
                     odd = this[i].querySelectorAll(mixElem);
         
                     // var elems = [];
@@ -495,8 +495,8 @@ window.E = (function () {
                     }
                 }
                 else if (spec) {
-                    var arg = mixElem.replace(/ {/, "~{").split("~")[1],
-                    mixElem = mixElem.replace(/ {/, "~{").split("~")[0],
+                    var arg = mixElem.split("{")[1],
+                    mixElem = mixElem.split("{")[0],
                     sp = this[i].querySelectorAll(mixElem),
                     nums = arg.replace(/\D/g, "").split(""); // removes non digit items
         
@@ -512,8 +512,8 @@ window.E = (function () {
                     }
                 }
                 else if (ratio) {
-                    var arg = mixElem.replace(/ {/, "~{").split("~")[1],
-                    mixElem = mixElem.replace(/ {/, "~").split("~")[0],
+                    var arg = mixElem.split("{")[1],
+                    mixElem = mixElem.split("{")[0],
                     num1 = arg.replace(/\D/g, "").split("")[0],
                     num2 = arg.replace(/\D/g, "").split("")[1],
                     ratio = this[i].querySelectorAll(mixElem);
@@ -813,7 +813,7 @@ window.E = (function () {
     /*////////////////////////////////////////
         Set attr method adds an attribute to the node(s)
     */
-   proto.setAttr = function (strType, strVal) {
+    proto.setAttr = function (strType, strVal) {
         strType = strType.replace(/, | ,/g, ",");
 
         // set attribute with both params
